@@ -1,15 +1,16 @@
 <template>
-  <view class="content">
+  <div class="content">
     <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
+    <div class="text-area">
       <text class="title">{{ title }}</text>
-    </view>
+    </div>
     <div>我叼,vite真尼玛快啊!</div>
-  </view>
+  </div>
 </template>
+
 <script setup lang="ts">
-  import { ref } from "vue";
-  const title = ref("Hello");
+  import { ref } from 'vue'
+  const title = ref('Hello')
 </script>
 
 <style>
