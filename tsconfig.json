@@ -26,7 +26,11 @@
     "noImplicitAny": false,
     "pretty": false,
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types"]
+    "types": ["@dcloudio/types"],
+    "paths": {
+      "@": ["./src"],
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "exclude": ["node_modules"]
 }

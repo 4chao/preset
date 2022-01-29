@@ -1,0 +1,11 @@
+diff --git a/node_modules/@dcloudio/types/uni-app/app.d.ts b/node_modules/@dcloudio/types/uni-app/app.d.ts
+index d11f945..a8b8acf 100644
+--- a/node_modules/@dcloudio/types/uni-app/app.d.ts
++++ b/node_modules/@dcloudio/types/uni-app/app.d.ts
+@@ -196,6 +196,5 @@ declare namespace App {
+ 
+ declare const getApp: App.GetApp;
+ 
+-declare const createApp: any;
+ declare const createPage: any;
+ declare const createComponent: any;
