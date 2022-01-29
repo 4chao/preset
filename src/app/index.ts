@@ -1,22 +1,26 @@
-import { App } from 'vue'
-export const app = {
-  [Symbol.toStringTag]: 'AppUtils',
-}
+import { App as VueApp } from 'vue'
+import store from './store'
+
 export const appPlugin = {
-  install: (vueApp: App, options) => {
+  install: (vueApp: VueApp, options) => {
     window.app = app
     vueApp.config.globalProperties.app = app
+    vueApp.use(store())
   },
 }
 
+export const app = {
+  [Symbol.toStringTag]: 'AppUtils',
+} as unknown as App
+
 declare global {
+  interface App {}
   interface Window {
-    app: typeof app
+    app: App
   }
 }
-
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
-    app: typeof app
+    app: globalThis.App
   }
 }

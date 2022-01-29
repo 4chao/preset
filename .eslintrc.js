@@ -234,6 +234,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 0,
     'no-undef': 0,
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
   },
   overrides: [
     {
