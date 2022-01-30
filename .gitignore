@@ -2,6 +2,7 @@
 node_modules/
 unpackage/
 /dist/
+src/pages.json
 
 yarn.lock
 package-lock.json

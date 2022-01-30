@@ -1,4 +1,4 @@
-<Meta title="我超!" title:微信="123"></Meta>
+<Meta title="我迪奥!" title:微信="123"></Meta>
 
 <template>
   <div class="content">
@@ -6,21 +6,13 @@
     <div class="text-area">
       <text class="title">{{ title }}</text>
     </div>
-    <div @click="abc">我叼,vite真尼玛快啊!</div>
-    <!-- <div>{{ app.User.token }}</div> -->
+    <div>我叼,vite真尼玛快啊!</div>
+    <div>{{ app.User.token }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
   const title = ref('Hello')
-  function abc() {
-    console.log(123123)
-
-    uni.navigateTo({
-      url: '/pages/index2/index',
-    })
-  }
 </script>
 
 <style>

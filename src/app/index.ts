@@ -3,7 +3,7 @@ import store from './store'
 
 export const appPlugin = {
   install: (vueApp: VueApp, options) => {
-    window.app = app
+    if (window) window.app = app
     vueApp.config.globalProperties.app = app
     vueApp.use(store())
   },
