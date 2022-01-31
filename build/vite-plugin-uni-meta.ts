@@ -1,4 +1,4 @@
-import parse5 from 'parse5'
+import htmlparser2 from 'htmlparser2'
 import fs from 'fs'
 import path from 'path'
 import c from 'picocolors'
@@ -73,7 +73,11 @@ export default function (options: Partial<Options> = {}) {
 
   fs.writeFileSync(
     'src/pages.json',
-    '// ⛔ 本文件由 auto pages 插件生成, 自定义配置请更改 app.config.ts 的 page 导出\n' +
+    '// ⛔ 本文件由 auto pages 插件生成\n' +
+      '// 请将本文件添加至 .gitignore\n' +
+      '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
+      '// 请修改 app.config.ts 的 page 导出\n' +
+      '\n' +
       JSON.stringify(merge(META, pageConfig))
   )
 
@@ -118,18 +122,33 @@ export default function (options: Partial<Options> = {}) {
 
   function getMeta(code) {
     let str = code.match(metaRE)?.[0]
+    if (!str) return
+    let attr
+    let parser = new htmlparser2.Parser(
+      {
+        onopentag(name, attributes) {
+          if (name !== 'meta') throw new Error('请为文件 ${hmr.file} 提供正确的meta信息')
+          attr = attributes
+        },
+      },
+      { lowerCaseAttributeNames: false }
+    )
+    parser.write(str)
+    parser.end()
+    console.log(attr)
+
     return (
-      str &&
+      attr &&
       JSON.stringify(
-        parse5.parseFragment(str).childNodes[0].attrs.reduce((o, e) => {
-          let [name, platform] = e.name.split(':')
+        Object.entries(attr).reduce((o, e) => {
+          let [name, platform] = e[0].split(':')
           name = attrEnum[name] || name
           platform = attrEnum[platform] || platform
           if (platform) {
             o[platform] = o[platform] || {}
-            o[platform][name] = e.value
+            o[platform][name] = e[1]
           } else {
-            o[name] = e.value
+            o[name] = e[1]
           }
           return o
         }, {})

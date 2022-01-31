@@ -18,7 +18,6 @@ export default defineConfig({
 
   plugins: [
     UniMeta(),
-    uni(),
     ViteRestart({
       restart: ['src/pages.js', 'src/app.config.js'],
     }),
@@ -26,5 +25,6 @@ export default defineConfig({
       imports: ['vue', presetAppUtils, presetUniapp],
       dts: 'declare/auto-imports.d.ts',
     }),
+    uni(),
   ],
 })
