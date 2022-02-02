@@ -8,28 +8,28 @@ import normallize from 'normalize-path'
 export interface Options {
   pagesRE: RegExp
   metaRE: RegExp
-  configFile: string
   pagesBasePath: string
   configPath: string
   attrEnum: { [unikey: string]: string }
   pluginName: string
+  DEBUG: boolean
 }
 
 export default function (options: Partial<Options> = {}) {
   let {
     pagesRE = /pages\/(.*?)\/(.*?\.vue)$/,
-    metaRE = /\<Meta(.|\s)*?(\/\>|\/Meta\>)/m,
-    configFile = 'vite.config.js',
+    metaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im,
     pagesBasePath = 'src/pages',
     configPath = 'src/app.config.js',
     attrEnum = {},
     pluginName = 'uni-meta',
+    DEBUG = false,
   } = options
   let AppConfig
   try {
     AppConfig = require(path.resolve(process.cwd(), configPath))
   } catch (error) {
-    debug(c.yellow(`未找到配置文件,将不会进行配置合并与预设合并`))
+    log(c.yellow(`未找到配置文件,将不会进行配置合并与预设合并`))
   }
 
   attrEnum = {
@@ -39,88 +39,102 @@ export default function (options: Partial<Options> = {}) {
     title: 'navigationBarTitleText',
     ...attrEnum,
   }
-  //本来想用异步,但无法保证先于uni插件加载,所以改成同步
-  const pageMeta: { [key: string]: string } = Object.fromEntries(
-    findPage()
-      .filter((file) => pagesRE.test(normalizePagePathFromBase(file)))
-      .map((file) => [
-        normalizePagePath(file).replace(/\.vue$/, ''),
-        getMeta(fs.readFileSync(file, 'utf-8')),
-      ])
-  )
+  let pageMeta: { [key: string]: string }
+  function generateMeta() {
+    //本来想用异步,但无法保证先于uni插件加载,所以改成同步
+    pageMeta = Object.fromEntries(
+      findPage()
+        .filter((file) => pagesRE.test(normalizePagePathFromBase(file)))
+        .map((file) => [normalizePagePath(file), getMeta(fs.readFileSync(file, 'utf-8')) || '{}'])
+    )
+    debug(`pageMeta:`, pageMeta)
 
-  const basePath = 'pages'
-  const META = {
-    pages: [],
-    subPackages: [],
-  }
+    const basePath = 'pages'
+    const META = {
+      pages: [],
+      subPackages: [],
+    }
 
-  Object.entries(pageMeta).forEach(([path, style]) => {
-    const [packageName, pageName] = path.split('/')
-    if (packageName == 'index') {
-      META['pages'][pageName.includes('index') ? 'unshift' : 'push']({
-        path: [basePath, packageName, pageName].join('/'),
-        style: JSON.parse(style),
-      })
-    } else {
-      const packagePath = [basePath, packageName].join('/')
-      const sub = META['subPackages'].find((item) => item.root == packagePath)
-      if (!sub) {
-        META['subPackages'].push({
-          root: packagePath,
-          pages: [
-            {
-              path: pageName,
-              style: JSON.parse(style),
-            },
-          ],
-        })
-      } else {
-        sub['pages'].push({
-          path: pageName,
+    Object.entries(pageMeta).forEach(([path, style]) => {
+      const [packageName, pageName] = path.split('/')
+      if (packageName == 'index') {
+        META['pages'][pageName.includes('index') ? 'unshift' : 'push']({
+          path: [basePath, packageName, pageName].join('/'),
           style: JSON.parse(style),
         })
+      } else {
+        const packagePath = [basePath, packageName].join('/')
+        const sub = META['subPackages'].find((item) => item.root == packagePath)
+        if (!sub) {
+          META['subPackages'].push({
+            root: packagePath,
+            pages: [
+              {
+                path: pageName,
+                style: JSON.parse(style),
+              },
+            ],
+          })
+        } else {
+          sub['pages'].push({
+            path: pageName,
+            style: JSON.parse(style),
+          })
+        }
       }
-    }
-  })
+    })
 
-  fs.writeFileSync(
-    'src/pages.json',
-    '// ⛔ 本文件由 auto pages 插件生成\n' +
-      '// 请将本文件添加至 .gitignore\n' +
-      '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
-      '// 请修改 app.config.ts 的 page 导出\n' +
-      '\n' +
-      JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, attrEnum) || {}))
-  )
+    fs.writeFileSync(
+      'src/pages.json',
+      '// ⛔ 本文件由 auto pages 插件生成\n' +
+        '// 请将本文件添加至 .gitignore\n' +
+        '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
+        '// 请修改 app.config.ts 的 page 导出\n' +
+        '\n' +
+        JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, attrEnum) || {}))
+    )
 
+    debug(`META:`, META)
+  }
+
+  generateMeta()
+
+  let server
   return [
     {
       name: 'vite-plugin-' + pluginName,
       enforce: 'pre',
-      configResolved() {
-        if (fs.existsSync('vite.config.ts')) configFile = 'vite.config.ts'
+      configureServer(_server) {
+        server = _server
       },
-      handleHotUpdate(hmr) {
-        if (pagesRE.test(normalizePagePathFromBase(hmr.file))) {
-          hmr.read().then(async (code) => {
+      transform(code, id) {
+        if (pagesRE.test(normalizePagePathFromBase(id))) {
+          if (pageMeta[normalizePagePath(id)]) {
             let meta
             try {
-              meta = await getMeta(code)
+              meta = getMeta(code)
             } catch (error) {
-              debug(c.red(`请为文件 ${hmr.file} 提供正确的meta信息\n` + c.red(error)))
+              log(c.red(`请为文件 ${normalizePagePath(id)} 提供正确的meta信息\n` + c.red(error)))
             }
-            if (pageMeta[normalizePagePath(hmr.file)] !== meta) {
-              touch(configFile)
-              debug(c.blue(normalizePagePath(hmr.file)), c.yellow(`更新了meta信息`))
-              debug(c.yellow(`正在重启服务并更新meta配置文件...`))
+            if (pageMeta[normalizePagePath(id)] !== meta) {
+              debug(pageMeta[normalizePagePath(id)], meta)
+
+              log(c.blue(normalizePagePath(id)), c.yellow(`更新了meta信息`))
+              log(c.yellow(`正在重启服务并更新meta配置文件...`))
+              if (server) server.restart()
+              else generateMeta() //适配小程序,小程序使用build所以获取不到dev server
             }
-          })
+          }
+          code = removeMeta(code)
         }
-        return hmr.modules
+        return { code }
       },
     },
   ]
+
+  function removeMeta(code) {
+    return code.replace(metaRE, '')
+  }
 
   function getMeta(code) {
     let str = code.match(metaRE)?.[0]
@@ -129,7 +143,6 @@ export default function (options: Partial<Options> = {}) {
     let parser = new htmlparser2.Parser(
       {
         onopentag(name, attributes) {
-          if (name !== 'meta') throw new Error()
           attr = attributes
         },
       },
@@ -175,26 +188,34 @@ export default function (options: Partial<Options> = {}) {
     return list
   }
 
-  function touch(path: string) {
-    const time = new Date()
+  // function touch(path: string) {
+  //   const time = new Date()
 
-    try {
-      fs.utimesSync(path, time, time)
-    } catch (err) {
-      fs.closeSync(fs.openSync(path, 'w'))
-    }
-  }
+  //   try {
+  //     fs.utimesSync(path, time, time)
+  //   } catch (err) {
+  //     fs.closeSync(fs.openSync(path, 'w'))
+  //   }
+  // }
 
   function normalizePagePath(file) {
-    return normallize(path.relative(pagesBasePath, file))
+    return normallize(path.relative(pagesBasePath, file)).replace(/\.vue$/, '')
   }
 
   function normalizePagePathFromBase(file) {
     return normallize(path.relative(process.cwd(), file))
   }
 
-  function debug(...args) {
+  function log(...args) {
     console.log(c.dim(new Date().toLocaleTimeString()), c.bold(c.red(`[${pluginName}]`)), ...args)
+  }
+  function debug(...args) {
+    DEBUG &&
+      console.log(
+        c.dim(new Date().toLocaleTimeString()),
+        c.bold(c.red(`[debug:${pluginName}]`)),
+        ...args
+      )
   }
 }
 
