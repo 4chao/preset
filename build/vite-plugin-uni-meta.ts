@@ -2,15 +2,17 @@ import htmlparser2 from 'htmlparser2'
 import fs from 'fs'
 import path from 'path'
 import c from 'picocolors'
-import { pages as pageConfig } from '../src/app.config'
-import { merge } from 'lodash'
+import { merge, transform, isObject } from 'lodash'
+import normallize from 'normalize-path'
 
 export interface Options {
   pagesRE: RegExp
   metaRE: RegExp
   configFile: string
-  pagesBase: string
+  pagesBasePath: string
+  configPath: string
   attrEnum: { [unikey: string]: string }
+  pluginName: string
 }
 
 export default function (options: Partial<Options> = {}) {
@@ -18,9 +20,18 @@ export default function (options: Partial<Options> = {}) {
     pagesRE = /pages\/(.*?)\/(.*?\.vue)$/,
     metaRE = /\<Meta(.|\s)*?(\/\>|\/Meta\>)/m,
     configFile = 'vite.config.js',
-    pagesBase = 'src/pages',
+    pagesBasePath = 'src/pages',
+    configPath = 'src/app.config.js',
     attrEnum = {},
+    pluginName = 'uni-meta',
   } = options
+  let AppConfig
+  try {
+    AppConfig = require(path.resolve(process.cwd(), configPath))
+  } catch (error) {
+    debug(c.yellow(`未找到配置文件,将不会进行配置合并与预设合并`))
+  }
+
   attrEnum = {
     微信: 'mp-weixin',
     app: 'app-plus',
@@ -29,10 +40,13 @@ export default function (options: Partial<Options> = {}) {
     ...attrEnum,
   }
   //本来想用异步,但无法保证先于uni插件加载,所以改成同步
-  const pageMeta = Object.fromEntries(
+  const pageMeta: { [key: string]: string } = Object.fromEntries(
     findPage()
-      .filter((file) => pagesRE.test(file))
-      .map((file) => [normalizePagePath(file), getMeta(fs.readFileSync(file, 'utf-8'))])
+      .filter((file) => pagesRE.test(normalizePagePathFromBase(file)))
+      .map((file) => [
+        normalizePagePath(file).replace(/\.vue$/, ''),
+        getMeta(fs.readFileSync(file, 'utf-8')),
+      ])
   )
 
   const basePath = 'pages'
@@ -69,7 +83,6 @@ export default function (options: Partial<Options> = {}) {
       }
     }
   })
-  // console.log(JSON.stringify(merge(json.parse(pagesJson), META)))
 
   fs.writeFileSync(
     'src/pages.json',
@@ -78,40 +91,29 @@ export default function (options: Partial<Options> = {}) {
       '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
       '// 请修改 app.config.ts 的 page 导出\n' +
       '\n' +
-      JSON.stringify(merge(META, pageConfig))
+      JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, attrEnum) || {}))
   )
 
   return [
     {
-      name: 'vite-plugin-uni-meta',
+      name: 'vite-plugin-' + pluginName,
       enforce: 'pre',
       configResolved() {
         if (fs.existsSync('vite.config.ts')) configFile = 'vite.config.ts'
       },
       handleHotUpdate(hmr) {
-        if (pagesRE.test(hmr.file)) {
+        if (pagesRE.test(normalizePagePathFromBase(hmr.file))) {
           hmr.read().then(async (code) => {
             let meta
             try {
               meta = await getMeta(code)
             } catch (error) {
-              console.error(`请为文件 ${hmr.file} 提供正确的meta信息`)
-              console.error(error)
+              debug(c.red(`请为文件 ${hmr.file} 提供正确的meta信息\n` + c.red(error)))
             }
-            // console.log(meta)
-            // console.log(pageMeta[hmr.file])
             if (pageMeta[normalizePagePath(hmr.file)] !== meta) {
               touch(configFile)
-              console.log(
-                c.dim(new Date().toLocaleTimeString()) +
-                  c.bold(c.red(' [uni-meta] ')) +
-                  c.yellow(`${normalizePagePath(hmr.file)} 更新了meta信息`)
-              )
-              console.log(
-                c.dim(new Date().toLocaleTimeString()) +
-                  c.bold(c.red(' [uni-meta] ')) +
-                  c.yellow(`正在重启服务并更新meta配置文件...`)
-              )
+              debug(c.blue(normalizePagePath(hmr.file)), c.yellow(`更新了meta信息`))
+              debug(c.yellow(`正在重启服务并更新meta配置文件...`))
             }
           })
         }
@@ -127,7 +129,7 @@ export default function (options: Partial<Options> = {}) {
     let parser = new htmlparser2.Parser(
       {
         onopentag(name, attributes) {
-          if (name !== 'meta') throw new Error('请为文件 ${hmr.file} 提供正确的meta信息')
+          if (name !== 'meta') throw new Error()
           attr = attributes
         },
       },
@@ -135,23 +137,21 @@ export default function (options: Partial<Options> = {}) {
     )
     parser.write(str)
     parser.end()
-    console.log(attr)
-
     return (
       attr &&
       JSON.stringify(
-        Object.entries(attr).reduce((o, e) => {
-          let [name, platform] = e[0].split(':')
-          name = attrEnum[name] || name
-          platform = attrEnum[platform] || platform
-          if (platform) {
-            o[platform] = o[platform] || {}
-            o[platform][name] = e[1]
-          } else {
-            o[name] = e[1]
-          }
-          return o
-        }, {})
+        replaceKeysDeep(
+          Object.entries(attr).reduce((style, e: [string, string]) => {
+            let [name, platform] = e[0].split(':')
+            const add = (o) => merge(style, o)
+            // eslint-disable-next-line no-eval
+            if (!name) return add({ [platform]: (0, eval)('str =' + e[1]) }) //以:开头的解析为object
+            if (!e[1]) return add(AppConfig.preset?.[name] || {}) // 不含value的解析为preset
+            if (platform) return add({ [platform]: { [name]: e[1] } }) // a:b="c"解析为{b:{a:"c"}}
+            if (name) return add({ [name]: e[1] }) // a="b"解析为{a:"b"}
+          }, {}),
+          attrEnum
+        )
       )
     )
   }
@@ -163,7 +163,7 @@ export default function (options: Partial<Options> = {}) {
    * @param {number} deep 查询深度
    * @returns {string[]} 查找到的页面路径
    */
-  function findPage(filePath = pagesBase, list = [], deep = 1) {
+  function findPage(filePath = pagesBasePath, list = [], deep = 1) {
     if (deep > 2) return list
     filePath = path.resolve(filePath)
     fs.readdirSync(filePath).forEach((filename) => {
@@ -186,11 +186,25 @@ export default function (options: Partial<Options> = {}) {
   }
 
   function normalizePagePath(file) {
-    const separ = file.includes('\\') ? '\\' : '/'
-    return path
-      .relative(pagesBase, file)
-      .split(separ)
-      .join('/')
-      .replace(/\.vue$/, '')
+    return normallize(path.relative(pagesBasePath, file))
   }
+
+  function normalizePagePathFromBase(file) {
+    return normallize(path.relative(process.cwd(), file))
+  }
+
+  function debug(...args) {
+    console.log(c.dim(new Date().toLocaleTimeString()), c.bold(c.red(`[${pluginName}]`)), ...args)
+  }
+}
+
+// keysMap = { oldKey1: newKey1, oldKey2: newKey2, etc...
+function replaceKeysDeep(obj, keysMap) {
+  return transform(obj, function (result, value, key) {
+    // transform to a new object
+
+    let currentKey = keysMap[key] || key // if the key is in keysMap use the replacement, if not use the original key
+
+    result[currentKey] = isObject(value) ? replaceKeysDeep(value, keysMap) : value // if the key is an object run it through the inner function - replaceKeys
+  })
 }

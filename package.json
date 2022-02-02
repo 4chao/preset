@@ -49,6 +49,7 @@
     "htmlparser2": "^7.2.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.2",
+    "normalize-path": "^3.0.0",
     "patch-package": "^6.4.7",
     "picocolors": "^1.0.0",
     "prettier": "^2.5.1",
