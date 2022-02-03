@@ -23,7 +23,7 @@ export default function (options: Partial<Options> = {}) {
     configPath = 'src/app.config.js',
     attrEnum = {},
     pluginName = 'uni-meta',
-    DEBUG = false,
+    DEBUG = process.env.DEBUG,
   } = options
   let AppConfig
   try {

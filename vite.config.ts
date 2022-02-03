@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import presetUniapp from './build/uniapp.preset'
 import presetAppUtils from './build/appUtils.preset'
 import UniMeta from './build/vite-plugin-uni-meta'
+import UniProvider from './build/vite-plugin-uni-provider'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
 
   plugins: [
     UniMeta(),
+    UniProvider(),
     ViteRestart({
       restart: ['src/pages.js', 'src/app.config.js'],
     }),

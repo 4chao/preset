@@ -1,13 +1,11 @@
-<Meta title="我超!" title:微信="123"></Meta>
-
 <template>
+  <meta title="我超!" title:微信="1234" />
   <div class="content">
     <image class="logo" src="/static/logo.png" />
     <div class="text-area">
       <text class="title">{{ title }}</text>
     </div>
     <div @click="abc">我叼,vite真尼玛快啊!</div>
-    <!-- <div>{{ app.User.token }}</div> -->
   </div>
 </template>
 
