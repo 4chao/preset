@@ -5,13 +5,20 @@
     <div class="text-area">
       <text class="title">{{ title }}</text>
     </div>
+    <UCodeInput v-model="value" mode="box" :space="0" :maxlength="4" hairline></UCodeInput>
+    <UInput placeholder="前置插槽">
+      <template #prefix>
+        <UText text="http://" margin="0 3px 0 0" type="tips" />
+      </template>
+    </UInput>
+    {{ value }}
     <div @click="abc">我叼,vite真尼玛快啊!</div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  const title = ref('Hello')
+  const title = $ref('Hello')
+  const value = $ref('')
   function abc() {
     console.log(123123)
 

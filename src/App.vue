@@ -9,4 +9,6 @@
     console.log('App Hide')
   })
 </script>
-<style></style>
+<style lang="scss">
+  @import 'uview-ui/index.scss';
+</style>
