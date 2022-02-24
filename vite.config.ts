@@ -16,7 +16,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
-
   plugins: [
     UniMeta(),
     UniProvider(),
@@ -27,6 +26,10 @@ export default defineConfig({
       imports: ['vue', presetAppUtils, presetUniapp],
       dts: 'declare/auto-imports.d.ts',
     }),
-    uni(),
+    uni({
+      vueOptions: {
+        reactivityTransform: true,
+      },
+    }),
   ],
 })
