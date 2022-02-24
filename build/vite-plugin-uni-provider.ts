@@ -41,14 +41,14 @@ export default function (options: Partial<Options> = {}) {
         if (startTag && !endTag)
           code = code
             .replace(new RegExp(`(?<=\<${name}.*?)(\/\>|>.*?\<\/${name}\>)`), '>')
-            .replace(/(?<=.*)\<\/template\>/, `</${name}>\n</template>`)
+            .replace(/([\s\S]*)(\<\/template\>)/, `$1</${name}>\n</template>`)
         if (!startTag && !endTag)
           code = code
             .replace('<template>', `<template>\n<${name}>`)
-            .replace(/(?<=.*)\<\/template\>/, `</${name}>\n</template>`)
+            .replace(/([\s\S]*)(\<\/template\>)/, `$1</${name}>\n</template>`)
         debug(c.yellow(id), `startTag: ${startTag}`, `endTag: ${endTag}`)
       }
-      return { code }
+      return { code, map: null }
     },
   }
 

@@ -127,7 +127,7 @@ export default function (options: Partial<Options> = {}) {
           }
           code = removeMeta(code)
         }
-        return { code }
+        return { code, map: null }
       },
     },
   ]
