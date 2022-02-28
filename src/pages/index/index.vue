@@ -2,17 +2,20 @@
   <meta title="我超!" title:微信="1234" />
   <div class="content">
     <image class="logo" src="/static/logo.png" />
-    <div class="text-area">
+    <div px5 class="text-area">
       <text class="title">{{ title }}</text>
     </div>
-    <UCodeInput v-model="value" mode="box" :space="0" :maxlength="4" hairline></UCodeInput>
-    <UInput placeholder="前置插槽">
+    <u-code-input v-model="value" mode="box" :space="0" :maxlength="4" hairline></u-code-input>
+    <u-input placeholder="前置插槽">
       <template #prefix>
-        <UText text="http://" margin="0 3px 0 0" type="tips" />
+        <u-text text="http://" margin="0 3px 0 0" type="tips" />
       </template>
-    </UInput>
+    </u-input>
     {{ value }}
-    <div @click="abc">我叼,vite真尼玛快啊!</div>
+    <div data-px5 dsfg @click="abc">我叼,vite真尼玛快啊!</div>
+    <div px5 shadow-lg text-white bg-green-500 hover:bg-green-300 border="rounded-lg none" class="">
+      Click me
+    </div>
   </div>
 </template>
 

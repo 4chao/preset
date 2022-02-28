@@ -41,7 +41,7 @@ module.exports = {
       'PascalCase',
       {
         registeredComponentsOnly: false,
-        ignores: [],
+        ignores: ['/^u-/'],
       },
     ],
     'vue/no-v-html': 'off',
@@ -140,7 +140,7 @@ module.exports = {
     'no-return-assign': [2, 'except-parens'],
     'no-self-assign': 2,
     'no-self-compare': 2,
-    'no-sequences': 2,
+    'no-sequences': 0,
     'no-shadow-restricted-names': 2,
     'no-spaced-func': 2,
     'no-sparse-arrays': 2,

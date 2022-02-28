@@ -1,0 +1,9 @@
+{
+  "type": "pwa-chrome",
+  "request": "launch",
+  "skipFiles": [],
+  "name": "Debug app",
+  "preLaunchTask": "yarn dev:h5",
+  "url": "https://localhost:8080",
+  "webRoot": "${workspaceFolder}"
+}

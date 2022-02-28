@@ -4,6 +4,7 @@ import path from 'path'
 import c from 'picocolors'
 import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
+import AppConfig from '../src/app.config'
 
 export interface Options {
   pagesRE: RegExp
@@ -20,17 +21,10 @@ export default function (options: Partial<Options> = {}) {
     pagesRE = /pages\/(.*?)\/(.*?\.vue)$/,
     metaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im,
     pagesBasePath = 'src/pages',
-    configPath = 'src/app.config.js',
     attrEnum = {},
     pluginName = 'uni-meta',
     DEBUG = process.env.DEBUG,
   } = options
-  let AppConfig
-  try {
-    AppConfig = require(path.resolve(process.cwd(), configPath))
-  } catch (error) {
-    log(c.yellow(`未找到配置文件,将不会进行配置合并与预设合并`))
-  }
 
   attrEnum = {
     微信: 'mp-weixin',
@@ -159,7 +153,7 @@ export default function (options: Partial<Options> = {}) {
             const add = (o) => merge(style, o)
             // eslint-disable-next-line no-eval
             if (!name) return add({ [platform]: (0, eval)('str =' + e[1]) }) //以:开头的解析为object
-            if (!e[1]) return add(AppConfig.preset?.[name] || {}) // 不含value的解析为preset
+            if (!e[1]) return add(AppConfig['preset']?.[name] || {}) // 不含value的解析为preset
             if (platform) return add({ [platform]: { [name]: e[1] } }) // a:b="c"解析为{b:{a:"c"}}
             if (name) return add({ [name]: e[1] }) // a="b"解析为{a:"b"}
           }, {}),
