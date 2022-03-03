@@ -18,15 +18,20 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      lodash: 'lodash-es',
     },
   },
   plugins: [
-    Inspect(),
-    MpAttrFix(),
-    UniMeta(),
-    UniProvider(),
+    Inspect(), //vite分析工具
+    MpAttrFix(), //修复小程序不能使用attr的问题
+    UniMeta(), //自动生成页面meta信息和路由并注册pages.json
+    UniProvider(), //自动注册页面全局组件
     Unocss({
       presets: [presetUno(), presetAttributify({ prefix: 'data-' }), presetIcons()],
+      shortcuts: {
+        'flex-center': 'flex flex-row justify-center items-center',
+        'flex-center-col': 'flex flex-col justify-center items-center',
+      },
     }),
     ViteRestart({
       restart: ['src/pages.js', 'src/app.config.ts'],

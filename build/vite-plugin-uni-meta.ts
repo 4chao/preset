@@ -1,11 +1,10 @@
-import htmlparser2 from 'htmlparser2'
+import { Parser } from 'htmlparser2'
 import fs from 'fs'
 import path from 'path'
 import c from 'picocolors'
 import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
 import AppConfig from '../src/app.config'
-
 export interface Options {
   pagesRE: RegExp
   metaRE: RegExp
@@ -134,7 +133,7 @@ export default function (options: Partial<Options> = {}) {
     let str = code.match(metaRE)?.[0]
     if (!str) return
     let attr
-    let parser = new htmlparser2.Parser(
+    let parser = new Parser(
       {
         onopentag(name, attributes) {
           attr = attributes

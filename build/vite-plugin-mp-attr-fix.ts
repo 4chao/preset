@@ -1,8 +1,5 @@
-import htmlparser2 from 'htmlparser2'
-import fs from 'fs'
 import path from 'path'
 import c from 'picocolors'
-import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
 
 export interface Options {
@@ -81,7 +78,7 @@ export default function (options: Partial<Options> = {}) {
         let suffix = v ? '' : '=""'
         log(s, '=>', `${sPrefix || ''}data-${s.replace(/:/g, '-').replace(sPrefix, '')}${suffix}`)
         code = code.replace(
-          new RegExp(`(?<!${PREFIX})${s}`, 'g'),
+          new RegExp(`(?<=\\s)${s}(?=\\s|>)`, 'g'),
           `${s.replace(/hover:/g, 'hover-')} ${sPrefix || ''}data-${s
             .replace(/hover:/g, 'hover-')
             .replace(sPrefix, '')}${suffix}`

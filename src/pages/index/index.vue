@@ -1,6 +1,6 @@
 <template>
   <meta title="我超!" title:微信="1234" />
-  <div class="content">
+  <div flex-center-col>
     <image class="logo" src="/static/logo.png" />
     <div px5 class="text-area">
       <text class="title">{{ title }}</text>
@@ -13,9 +13,12 @@
     </u-input>
     {{ value }}
     <div data-px5 dsfg @click="abc">我叼,vite真尼玛快啊!</div>
-    <div px5 shadow-lg text-white bg-green-500 hover:bg-green-300 border="rounded-lg none" class="">
+    <div px shadow-lg text-white bg-green-500 hover:bg-green-300 border="rounded-lg none">
       Click me
+      <div pl10 style="padding-right: 75rpx">123</div>
+      <i i-ri-profile-line></i>
     </div>
+    <div p10 bg-black bg-opacity-20>123</div>
   </div>
 </template>
 
