@@ -2,6 +2,11 @@
   <meta title="我超!" title:微信="1234" />
   <div flex-center-col>
     <image class="logo" src="/static/logo.png" />
+    <image class="logo" src="/static/logo.png" />
+    <image class="logo" src="/static/logo.png" />
+    <image class="logo" src="/static/logo.png" />
+    <image class="logo" src="/static/logo.png" />
+    <image class="logo" src="/static/logo.png" />
     <div px5 class="text-area">
       <text class="title">{{ title }}</text>
     </div>
@@ -12,7 +17,12 @@
       </template>
     </u-input>
     {{ value }}
-    <div data-px5 dsfg @click="abc">我叼,vite真尼玛快啊!</div>
+    <div
+      data-px5
+      dsfg
+      @click="app.to('index2/index', { a: 'b', c: ['d', 'e=f'], f: [['g', '喵喵喵'], ['h']] })"
+      >我叼,vite真尼玛快啊!</div
+    >
     <div px shadow-lg text-white bg-green-500 hover:bg-green-300 border="rounded-lg none">
       Click me
       <div pl10 style="padding-right: 75rpx">123</div>
@@ -25,13 +35,7 @@
 <script setup lang="ts">
   const title = $ref('Hello')
   const value = $ref('')
-  function abc() {
-    console.log(123123)
-
-    uni.navigateTo({
-      url: '/pages/index2/index',
-    })
-  }
+  onPageScroll(() => {})
 </script>
 
 <style>

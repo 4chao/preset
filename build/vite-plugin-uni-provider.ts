@@ -1,8 +1,5 @@
-import htmlparser2 from 'htmlparser2'
-import fs from 'fs'
 import path from 'path'
 import c from 'picocolors'
-import { merge, transform, isObject } from 'lodash-es'
 import normallize from 'normalize-path'
 
 export interface Options {
