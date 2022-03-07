@@ -33,9 +33,16 @@
 </template>
 
 <script setup lang="ts">
+  import { useScroll } from '@/hooks'
   const title = $ref('Hello')
   const value = $ref('')
-  onPageScroll(() => {})
+
+  useScroll(onPageScroll)
+    .enable('all')
+    .onLoad((page) => {
+      console.log('onLoad', page)
+      page.endSuccess(0, false)
+    })
 </script>
 
 <style>
