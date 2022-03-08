@@ -7,6 +7,7 @@
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:h5": "uni build",
     "commit": "cz",
+    "update:template": "echo '将模板合并到当前分支...' ; git remote add template https://github.com/4chao/preset.git ; git fetch template && git merge template/master -m '🥝 update: template'",
     "prepare": "husky install",
     "preinstall": "node ./scripts/preinstall.js",
     "postinstall": "patch-package"
