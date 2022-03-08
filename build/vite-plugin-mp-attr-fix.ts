@@ -75,11 +75,12 @@ export default function (options: Partial<Options> = {}) {
 
       Object.entries(map).forEach(([s, v]) => {
         let sPrefix = strippedPrefixes.find((e) => s.startsWith(e))
+        if (sPrefix) return
         let suffix = v ? '' : '=""'
         log(s, '=>', `${sPrefix || ''}data-${s.replace(/:/g, '-').replace(sPrefix, '')}${suffix}`)
         code = code.replace(
           new RegExp(`(?<=\\s)${s}(?=\\s|>)`, 'g'),
-          `${s.replace(/hover:/g, 'hover-')} ${sPrefix || ''}data-${s
+          `${s.replace(/hover:/g, 'hover-')} data-${s
             .replace(/hover:/g, 'hover-')
             .replace(sPrefix, '')}${suffix}`
         )

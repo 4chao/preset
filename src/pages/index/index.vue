@@ -1,5 +1,12 @@
 <template>
   <meta title="我超!" title:微信="1234" />
+  <Sticker
+    class="sticker"
+    :style="{ height: uni.upx2px(100) + 'px' }"
+    :limit="[-uni.upx2px(100), 0]"
+  >
+    <div>123</div>
+  </Sticker>
   <div flex-center-col>
     <image class="logo" src="/static/logo.png" />
     <image class="logo" src="/static/logo.png" />
@@ -21,8 +28,9 @@
       data-px5
       dsfg
       @click="app.to('index2/index', { a: 'b', c: ['d', 'e=f'], f: [['g', '喵喵喵'], ['h']] })"
-      >我叼,vite真尼玛快啊!</div
     >
+      我叼,vite真尼玛快啊!
+    </div>
     <div px shadow-lg text-white bg-green-500 hover:bg-green-300 border="rounded-lg none">
       Click me
       <div pl10 style="padding-right: 75rpx">123</div>
@@ -33,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+  import Sticker from '@/components/Sticker.vue'
   import { useScroll } from '@/hooks'
   const title = $ref('Hello')
   const value = $ref('')
@@ -46,6 +55,15 @@
 </script>
 
 <style>
+  .sticker {
+    position: fixed;
+    top: var(--window-top);
+    left: 0;
+    right: 0;
+    z-index: 900;
+    height: 100rpx;
+    background: #66ccff;
+  }
   .content {
     display: flex;
     flex-direction: column;
