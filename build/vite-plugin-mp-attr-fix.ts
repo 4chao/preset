@@ -77,7 +77,7 @@ export default function (options: Partial<Options> = {}) {
         let sPrefix = strippedPrefixes.find((e) => s.startsWith(e))
         if (sPrefix) return
         let suffix = v ? '' : '=""'
-        log(s, '=>', `${sPrefix || ''}data-${s.replace(/:/g, '-').replace(sPrefix, '')}${suffix}`)
+        debug(s, '=>', `${sPrefix || ''}data-${s.replace(/:/g, '-').replace(sPrefix, '')}${suffix}`)
         code = code.replace(
           new RegExp(`(?<=\\s)${s}(?=\\s|>)`, 'g'),
           `${s.replace(/hover:/g, 'hover-')} data-${s

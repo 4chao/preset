@@ -41,6 +41,12 @@ export interface ScrollOptions {
 }
 /**
  * 上拉加载,下拉刷新
+ *
+ * @example
+ * useScroll(onPageScroll)
+ *   .onLoad((page) => {
+ *     page.endSuccess()
+ *   })
  * @returns toRefs<{ data?: any; t?: number; from?: string }>
  */
 export function useScroll(onPageScroll?: typeof import('@dcloudio/uni-app')['onPageScroll']) {
