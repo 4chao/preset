@@ -51,7 +51,7 @@
     [min, max] = limit.split(',').map(Number)
   }
   function onScroll(y1, y2, ins) {
-    console.log(ins);
+    if (y1 < 0) return
     h += (y2 - y1) || 0
     h < min && (h = min)
     h > max && (h = max)
