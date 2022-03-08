@@ -1,7 +1,7 @@
 <template>
   <view
     :change:scrollTop="wxsBiz.onScroll"
-    :scroll-top="scrollTop"
+    :scrollTop="scrollTop"
     :change:limit="wxsBiz.limit"
     :limit="limit.join(',')"
   >
@@ -28,6 +28,7 @@
     [min, max] = limit.split(',').map(Number)
   }
   function onScroll(y1, y2, ins) {
+    console.log(ins);
     h += (y2 - y1) || 0
     h < min && (h = min)
     h > max && (h = max)

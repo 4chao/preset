@@ -3,7 +3,7 @@ import store from './store'
 import server from './server'
 
 export const app = {
-  [Symbol.toStringTag]: 'AppUtils',
+  [Symbol.toStringTag]: 'AppGlobalUtils',
 } as unknown as App
 
 export const appPlugin = {
@@ -16,7 +16,7 @@ export const appPlugin = {
     vueApp.config.globalProperties.any = (arg) => arg as any //本函数帮助微信小程序中数据层显式传值到视图层
     vueApp.use(store())
     vueApp.use(server())
-    Object.values(import.meta.globEager('./utils/*.ts')).forEach((v) => v.default())
+    Object.values(import.meta.globEager('./utils/*.ts')).forEach((v) => v?.default?.())
   },
 }
 

@@ -24,6 +24,7 @@
     "@dcloudio/uni-mp-toutiao": "^3.0.0-alpha-3040020220301002",
     "@dcloudio/uni-mp-weixin": "^3.0.0-alpha-3040020220301002",
     "@dcloudio/uni-quickapp-webview": "^3.0.0-alpha-3040020220301002",
+    "dayjs": "^1.10.8",
     "is": "^3.3.0",
     "js-base64": "^3.7.2",
     "lodash": "^4.17.21",

@@ -34,6 +34,7 @@ module.exports = {
     'no-empty': 'off',
     'vue/max-attributes-per-line': ['off'],
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/attribute-hyphenation': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/component-name-in-template-casing': [
