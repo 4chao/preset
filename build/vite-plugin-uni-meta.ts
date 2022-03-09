@@ -17,7 +17,7 @@ export interface Options {
 
 export default function (options: Partial<Options> = {}) {
   let {
-    pagesRE = /pages\/(.*?)\/(.*?\.vue)$/,
+    pagesRE = /pages\/([^\/]*?)\/([^\/]*?\.vue)$/,
     metaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im,
     pagesBasePath = 'src/pages',
     attrEnum = {},

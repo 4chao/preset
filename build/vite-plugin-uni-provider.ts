@@ -14,7 +14,7 @@ export interface Options {
 
 export default function (options: Partial<Options> = {}) {
   let {
-    pagesRE = /pages\/(.*?)\/(.*?\.vue)$/,
+    pagesRE = /pages\/([^\/]*?)\/([^\/]*?\.vue)$/,
     name = 'sys',
     configFile = 'vite.config.js',
     pagesBasePath = 'src/pages',
