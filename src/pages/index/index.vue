@@ -1,6 +1,6 @@
 <template>
   <meta title="主页" title:微信="微信端主页" />
-  <div flex-center-col pt40>
+  <div flex-center-col pt40 @click="app.to('index')">
     {{ title }}
   </div>
 </template>
