@@ -22,6 +22,7 @@ interface PromiseConstructor {
   wait(n: number): Promise<void>
 }
 
+// #ifdef MP
 Object.assign(global, {
   Array: Array,
   Date: Date,
@@ -37,3 +38,4 @@ Object.assign(global, {
   setInterval: setInterval,
   clearInterval: clearInterval,
 })
+// #endif
