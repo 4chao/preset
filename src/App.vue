@@ -10,6 +10,7 @@
   })
 </script>
 <style lang="scss">
+  @import '@/styles/color-ui.css';
   @import 'uview-ui/index.scss';
   page {
     --safe-area-inset-top: 0px;
