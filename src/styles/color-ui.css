@@ -10,7 +10,7 @@
 /* 注意⚠️ */
 /* 所有view标签被转换成div标签 */
 /* 所有upx单位被转换成rpx */
-/* icon已被精简 70KiB => 5KiB */
+/* icon已被精简,只剩叉号箭头等必要图标 70KiB => 2KiB */
 /* by PentaTea 2022-03-11 */
 @import url(./color-ui-icon.css);
 
