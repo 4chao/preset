@@ -6,7 +6,8 @@
 </template>
 
 <script setup lang="ts">
-  const title = $ref('Hello')
+  let a = '123'
+  const title = $ref<typeof a>('Hello')
 </script>
 
 <style></style>

@@ -13,6 +13,7 @@ export interface Options {
   DEBUG: boolean
 }
 
+const htmlRE = /<template>[\s\S]*<\/template>/g
 const elementRE = /<\w[\w:\.$-]*\s((?:'[\s\S]*?'|"[\s\S]*?"|`[\s\S]*?`|\{[\s\S]*?\}|[\s\S]*?)*?)>/g
 const valuedAttributeRE =
   /([?]|(?!\d|-{2}|-\d)[a-zA-Z0-9\u00A0-\uFFFF-@_:%-]+)(?:=(["'])([^\2]*?)\2)?/g
@@ -52,7 +53,7 @@ export default function (options: Partial<Options> = {}) {
       let map = {}
       if (excludedFiles.some((e) => id.includes(e)) || !includedFiles.some((e) => e.test(id)))
         return null
-      let aaa = Array.from(code.matchAll(elementRE)).flatMap((match) =>
+      let aaa = Array.from(code.match(htmlRE)?.[0]?.matchAll(elementRE) || []).flatMap((match) =>
         Array.from(
           (excludedTags.some((e) => match[0].startsWith('<' + e)) ? '' : match[1]).matchAll(
             valuedAttributeRE
