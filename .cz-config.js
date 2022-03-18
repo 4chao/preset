@@ -2,6 +2,7 @@ module.exports = {
   types: [
     '✨ 功能,feat,新增产品功能',
     '🐛 修复,fix,修复 bug',
+    '🚧 进行中,WIP,Work In Process',
     '📝 文档,docs,文档的变更',
     '🎨 格式,format,不改变代码功能的变动(如删除空格、格式化、去掉末尾分号等)',
     '💄 样式,style,更改css,scss,less样式',
