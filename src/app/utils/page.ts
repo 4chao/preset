@@ -10,6 +10,7 @@ const pageTools = {
       if (!path.startsWith('/')) {
         let pathArray = path.split('/')
         path = [
+          null,
           ['', currentPath[0], currentPath[1], pathArray[0]],
           ['', currentPath[0], pathArray[0], pathArray[1]],
         ][pathArray.length].join('/')
