@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 /// <reference types="vue/macros-global" />
 
+type Is<T> = T
 declare module '*.vue' {
   import { DefineComponent } from 'vue'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types

@@ -6,8 +6,13 @@
 </template>
 
 <script setup lang="ts">
-  let a = '123'
-  const title = $ref<typeof a>('Hello')
+import { useScroll } from '@/hooks'
+const title = $ref('Hello')
+
+useScroll(onPageScroll).onLoad(page => {
+  app.info('页面加载', `第${page.num}页`)
+  setTimeout(() => page.endSuccess(10, false), 1000)
+})
 </script>
 
 <style></style>

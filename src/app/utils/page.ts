@@ -9,27 +9,22 @@ const pageTools = {
       const t = String(+new Date())
       if (!path.startsWith('/')) {
         let pathArray = path.split('/')
-        switch (pathArray.length) {
-          case 1:
-            pathArray = ['', currentPath[0], currentPath[1], pathArray[0]]
-            break
-          case 2:
-            pathArray = ['', currentPath[0], pathArray[0], pathArray[1]]
-            break
-        }
-        path = pathArray.join('/')
+        path = [
+          ['', currentPath[0], currentPath[1], pathArray[0]],
+          ['', currentPath[0], pathArray[0], pathArray[1]],
+        ][pathArray.length].join('/')
       }
       const pkg = { data: obj, from: currentPath, t }
       const querystr = encode(JSON.stringify(pkg)).replace(/=/g, '等')
       console.log(`to ${path}`, obj ? `\n` : '', obj || '')
       uni.navigateTo({
         url: path + '?q=' + querystr,
-        fail: (err) => console.log(err),
+        fail: err => console.log(err),
       })
-      return new Promise<void>((r) => uni.$once(t, r))
+      return new Promise<void>(r => uni.$once(t, r))
     },
     500,
-    { leading: true, trailing: false }
+    { leading: true, trailing: false },
   ),
   back: debounce(
     (data?: any) => {
@@ -50,7 +45,7 @@ const pageTools = {
       }
     },
     500,
-    { leading: true, trailing: false }
+    { leading: true, trailing: false },
   ),
 }
 
@@ -58,8 +53,6 @@ export default function () {
   Object.assign(app, pageTools)
 }
 
-type PageTools = typeof pageTools
-
 declare global {
-  interface App extends PageTools {}
+  interface App extends Is<typeof pageTools> {}
 }

@@ -14,11 +14,11 @@ module.exports = {
   // jsx单引号 default:false
   jsxSingleQuote: true,
   // 最后一个对象元素加逗号 default:"es5"
-  trailingComma: 'es5',
+  trailingComma: 'all',
   // 在对象字面量声明所使用的的花括号后（{）和前（}）输出空格 default:true
   bracketSpacing: true,
   // (x) => {} 是否要有小括号 default:"always"
-  arrowParens: 'always',
+  arrowParens: 'avoid',
   // default:0
   rangeStart: 0,
   // default:Infinity
@@ -30,9 +30,7 @@ module.exports = {
   // 不包装 markdown text default:"preserve"
   proseWrap: 'never',
   // HTML空白敏感性 default:"css"
-  htmlWhitespaceSensitivity: 'strict',
+  htmlWhitespaceSensitivity: 'ignore',
   // 在 *.vue 文件中 Script 和 Style 标签内的代码是否缩进 default:false
-  vueIndentScriptAndStyle: true,
-  // 末尾换行符 default:"lf"
-  endOfLine: 'auto',
+  vueIndentScriptAndStyle: false,
 }

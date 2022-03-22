@@ -1,22 +1,34 @@
 import { App as VueApp } from 'vue'
 import store from './store'
 import server from './server'
+import preset from './preset'
 
 export const app = {
   [Symbol.toStringTag]: 'AppGlobalUtils',
+  ...preset,
 } as unknown as App
 
 export const appPlugin = {
   install: (vueApp: VueApp, options) => {
-    if (window) window.app = app
-    if (wx) wx['app'] = app
+    app.catch(() => (window['app'] = app))
+    app.catch(() => (uni['app'] = app))
+    app.catch(() => (wx['app'] = app))
+    app.catch(() => (wx['uni'] = uni))
     vueApp.config.globalProperties.app = app
     vueApp.config.globalProperties.uni = uni
-    vueApp.config.globalProperties.log = (...args) => (console.log(...args), args[0])
-    vueApp.config.globalProperties.any = (arg) => arg as any //本函数帮助微信小程序中数据层显式传值到视图层
     vueApp.use(store())
     vueApp.use(server())
-    Object.values(import.meta.globEager('./utils/*.ts')).forEach((v) => v?.default?.())
+    let sum = ''
+    Object.entries(import.meta.globEager('./utils/*.ts')).forEach(([k, v]) => {
+      let name = k.replace(/^\.\/utils\//, '')
+      try {
+        v?.default?.(vueApp)
+        sum += name + ' '
+      } catch (error) {
+        console.error('[appPlugin 加载失败]', `in ${name}\n`, error)
+      }
+    })
+    if (import.meta.env.DEV) app.success('appPlugin 加载完成', sum)
   },
 }
 
@@ -24,13 +36,11 @@ declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     app: globalThis.App
     uni: globalThis.UniApp.Uni
-    log: <T>(...args: [T, ...any]) => T
-    any: (arg: any) => any
   }
 }
 
 declare global {
-  interface App {}
+  interface App extends Is<typeof preset> {}
   interface Window {
     app: App
   }
