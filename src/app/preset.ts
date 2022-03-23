@@ -1,3 +1,4 @@
+import './test'
 export default {
   try: <T>(fn: () => T) =>
     new Promise<T>((resolve, reject) => {

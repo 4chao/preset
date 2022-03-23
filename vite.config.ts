@@ -11,6 +11,7 @@ import appAutoImport from './build/appAutoImport.preset'
 import UniMeta from './build/vite-plugin-uni-meta'
 import UniProvider from './build/vite-plugin-uni-provider'
 import MpAttrFix from './build/vite-plugin-mp-attr-fix'
+import Espower from './build/vite-plugin-espower'
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -24,6 +25,7 @@ export default defineConfig({
     MpAttrFix(), //修复小程序不能使用attr的问题
     UniMeta(), //自动生成页面meta信息和路由并注册pages.json
     UniProvider(), //自动注册页面全局组件
+    Espower(),
     Unocss({
       presets: [presetUno(), presetAttributify({ prefix: 'data-' }), presetIcons()],
       shortcuts: {
