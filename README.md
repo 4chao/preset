@@ -1,4 +1,6 @@
 # Uniapp Preset
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2F4chao%2Fpreset?ref=badge_shield)
+
 
 <div>
 <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" height="31">
@@ -58,3 +60,7 @@ TODO:
 > hook 命名需要以 use 开头
 >
 > 通过 `import { xxx } from '@/hooks'` 引入
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2F4chao%2Fpreset?ref=badge_large)
