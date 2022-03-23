@@ -9,6 +9,11 @@
 <img src="https://img.shields.io/badge/license-MIT-44ccff.svg" height="20">
 <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=small" height="20">
 </div>
+<br>
+<a href="https://www.pixiv.net/artworks/93782133">
+<img src="https://user-images.githubusercontent.com/26431026/159630824-ea9fcd0e-0a32-4aae-8be1-61725f6b6bb8.png" align="right"  height="580">
+</a>
+
 
 - [💄 Features](#-features)
 - [🎉 Getting Started](#-getting-started)
