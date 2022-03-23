@@ -10,7 +10,7 @@ export interface Options {
   metaRE: RegExp
   pagesBasePath: string
   configPath: string
-  attrEnum: { [unikey: string]: string }
+  alias: { [unikey: string]: string }
   pluginName: string
   DEBUG: boolean
 }
@@ -20,25 +20,25 @@ export default function (options: Partial<Options> = {}) {
     pagesRE = /pages\/([^\/]*?)\/([^\/]*?\.vue)$/,
     metaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im,
     pagesBasePath = 'src/pages',
-    attrEnum = {},
+    alias = {},
     pluginName = 'uni-meta',
     DEBUG = process.env.DEBUG,
   } = options
 
-  attrEnum = {
+  alias = {
     微信: 'mp-weixin',
     app: 'app-plus',
 
     title: 'navigationBarTitleText',
-    ...attrEnum,
+    ...alias,
   }
   let pageMeta: { [key: string]: string }
   function generateMeta() {
     //本来想用异步,但无法保证先于uni插件加载,所以改成同步
     pageMeta = Object.fromEntries(
       findPage()
-        .filter((file) => pagesRE.test(normalizePagePathFromBase(file)))
-        .map((file) => [normalizePagePath(file), getMeta(fs.readFileSync(file, 'utf-8')) || '{}'])
+        .filter(file => pagesRE.test(normalizePagePathFromBase(file)))
+        .map(file => [normalizePagePath(file), getMeta(fs.readFileSync(file, 'utf-8')) || '{}']),
     )
     debug(`pageMeta:`, pageMeta)
 
@@ -57,7 +57,7 @@ export default function (options: Partial<Options> = {}) {
         })
       } else {
         const packagePath = [basePath, packageName].join('/')
-        const sub = META['subPackages'].find((item) => item.root == packagePath)
+        const sub = META['subPackages'].find(item => item.root == packagePath)
         if (!sub) {
           META['subPackages'].push({
             root: packagePath,
@@ -84,7 +84,7 @@ export default function (options: Partial<Options> = {}) {
         '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
         '// 请修改 app.config.ts 的 page 导出\n' +
         '\n' +
-        JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, attrEnum) || {}))
+        JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, alias) || {})),
     )
 
     debug(`META:`, META)
@@ -139,7 +139,7 @@ export default function (options: Partial<Options> = {}) {
           attr = attributes
         },
       },
-      { lowerCaseAttributeNames: false }
+      { lowerCaseAttributeNames: false },
     )
     parser.write(str)
     parser.end()
@@ -149,15 +149,15 @@ export default function (options: Partial<Options> = {}) {
         replaceKeysDeep(
           Object.entries(attr).reduce((style, e: [string, string]) => {
             let [name, platform] = e[0].split(':')
-            const add = (o) => merge(style, o)
+            const add = o => merge(style, o)
             // eslint-disable-next-line no-eval
             if (!name) return add({ [platform]: (0, eval)('str =' + e[1]) }) //以:开头的解析为object
             if (!e[1]) return add(AppConfig['preset']?.[name] || {}) // 不含value的解析为preset
             if (platform) return add({ [platform]: { [name]: e[1] } }) // a:b="c"解析为{b:{a:"c"}}
             if (name) return add({ [name]: e[1] }) // a="b"解析为{a:"b"}
           }, {}),
-          attrEnum
-        )
+          alias,
+        ),
       )
     )
   }
@@ -172,7 +172,7 @@ export default function (options: Partial<Options> = {}) {
   function findPage(filePath = pagesBasePath, list = [], deep = 1) {
     if (deep > 2) return list
     filePath = path.resolve(filePath)
-    fs.readdirSync(filePath).forEach((filename) => {
+    fs.readdirSync(filePath).forEach(filename => {
       const filedir = path.join(filePath, filename)
       const stats = fs.statSync(filedir)
       if (stats.isFile() && /\.n?vue$/.test(filename)) list.push(filedir)
@@ -207,7 +207,7 @@ export default function (options: Partial<Options> = {}) {
       console.log(
         c.dim(new Date().toLocaleTimeString()),
         c.bold(c.red(`[debug:${pluginName}]`)),
-        ...args
+        ...args,
       )
   }
 }

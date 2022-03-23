@@ -7,7 +7,7 @@
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:h5": "uni build",
     "commit": "cz",
-    "update:template": "echo '将模板合并到当前分支...' ; git remote add template https://github.com/4chao/preset.git ; git fetch template && git merge template/master -m '🥝 update: template'",
+    "upgrade:template": "echo '将模板合并到当前分支...' ; git remote add template https://github.com/4chao/preset.git ; git fetch template && git merge template/master -m '🥝 upgrade: template'",
     "prepare": "husky install",
     "preinstall": "node ./scripts/preinstall.js",
     "postinstall": "patch-package"
@@ -68,7 +68,7 @@
     "sass": "^1.49.9",
     "typescript": "^4.5.5",
     "unocss": "^0.28.0",
-    "unplugin-auto-import": "^0.5.11",
+    "unplugin-auto-import": "^0.6.6",
     "vite": "^2.7.13",
     "vite-plugin-inspect": "^0.3.15",
     "vite-plugin-restart": "^0.1.1"
