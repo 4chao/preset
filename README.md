@@ -7,13 +7,19 @@
 </div>
 <div align="center">
 <img src="https://img.shields.io/badge/license-MIT-44ccff.svg" height="20">
+<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" height="20">
+</div>
+<div align="center">
 <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=small" height="20">
 </div>
 <br>
-<a href="https://www.pixiv.net/artworks/93782133">
-<img src="https://user-images.githubusercontent.com/26431026/159630824-ea9fcd0e-0a32-4aae-8be1-61725f6b6bb8.png" align="right"  height="580">
-</a>
 
+<a href="https://www.pixiv.net/artworks/93782133">
+<div align="right">93782133</div>
+</a>
+<a href="https://www.pixiv.net/artworks/93782133">
+<img src="https://user-images.githubusercontent.com/26431026/159630824-ea9fcd0e-0a32-4aae-8be1-61725f6b6bb8.png" align="right" height="580">
+</a>
 
 - [💄 Features](#-features)
 - [🎉 Getting Started](#-getting-started)
@@ -34,8 +40,8 @@
   - [🪝 Hooks](#-hooks)
     - [页面传参获取](#页面传参获取)
     - [上拉加载下拉刷新](#上拉加载下拉刷新)
-- [🍻 Contributing](#-contributing)
-- [📝 License](#-license)
+- [🍻 Contribute](#-contribute)
+- [📜 License](#-license)
 
 ## 💄 Features
 
@@ -55,6 +61,7 @@ TODO:
 - [ ] 添加 axios 模块，构建请求封装
 - [ ] 添加 UniCloud-ts 基础框架 (`src/app/server/`)
 - [ ] 页面跳转传参改为事件机制
+- [ ] 添加单元测试工作流 (mocha & power-assert)
 
 **欢迎大家提交 PR 和 Issue**
 
@@ -288,14 +295,21 @@ useScroll(onPageScroll).onLoad(page => {
 })
 ```
 
-## 🍻 Contributing
+## 🍻 Contribute
 
 我们非常欢迎你参与贡献，你可以将使用过程中添加的新 Hooks 或 Utils 提交至本仓库并获得社区的持续助力！
 
 期待你的 PR 和 Issue!（你甚至可以帮助完善一下这个贡献指南）
 
-## 📝 License
+## 📜 License
 
-MIT License © 2022 PentaTea
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2F4chao%2Fpreset?ref=badge_large">
+<img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=large" align="left">
+</a>
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2F4chao%2Fpreset?ref=badge_large)
+```
+MIT License
+
+Copyright © 2022-PRESENT PentaTea
+
+```
