@@ -26,12 +26,12 @@
     "noImplicitAny": false,
     "pretty": false,
     "lib": ["esnext", "dom"],
-    "types": ["node", "@dcloudio/types", "@types/weixin-app"],
+    "types": ["node", "@dcloudio/types", "@types/weixin-app", "vitest/globals"],
     "paths": {
       "@": ["./src"],
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "declare/**/*", "build/**/*"],
+  "include": ["src/**/*", "declare/**/*", "build/**/*", "test/**/*"],
   "exclude": ["node_modules"]
 }

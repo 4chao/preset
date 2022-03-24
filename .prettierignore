@@ -1,6 +1,5 @@
 *.min.js
 *-min.js
-test
 dist
 public
 assets

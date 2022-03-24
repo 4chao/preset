@@ -1,8 +1,9 @@
 <template>
   <meta title="主页" title:微信="微信端主页" />
-  <div flex-center-col pt40 class="bg-green" @click="app.to('index')">
+  <div flex-center-col pt40 class="bg-green" @click="app.to('test/index')">
     {{ title }}
   </div>
+  <div id="mocha"></div>
 </template>
 
 <script setup lang="ts">

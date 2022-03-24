@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import path from 'path'
 
@@ -7,10 +8,10 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Inspect from 'vite-plugin-inspect'
 import Unocss from 'unocss/vite'
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
-import appAutoImport from './build/appAutoImport.preset'
 import UniMeta from './build/vite-plugin-uni-meta'
 import UniProvider from './build/vite-plugin-uni-provider'
 import MpAttrFix from './build/vite-plugin-mp-attr-fix'
+import Espower from './build/vite-plugin-espower'
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -35,13 +36,31 @@ export default defineConfig({
       restart: ['src/pages.js', 'src/app.config.ts'],
     }),
     AutoImport({
-      imports: ['vue', 'uni-app', appAutoImport],
+      imports: [
+        'vue',
+        'uni-app',
+        { '@/app/index': ['app'] },
+        { 'power-assert': [['default', 'assert']] },
+      ],
       dts: 'declare/auto-imports.d.ts',
     }),
-    uni({
-      vueOptions: {
-        reactivityTransform: true,
-      },
-    }),
+    isTest() ||
+      uni({
+        vueOptions: {
+          reactivityTransform: true,
+        },
+      }),
+    isTest() && Espower(),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    deps: {
+      inline: ['@vue'],
+    },
+  },
 })
+
+function isTest() {
+  return process.env.NODE_ENV === 'test'
+}

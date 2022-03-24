@@ -6,6 +6,7 @@
     "dev:h5": "uni",
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:h5": "uni build",
+    "test": "vitest",
     "commit": "cz",
     "upgrade:template": "echo '将模板合并到当前分支...' ; git remote add template https://github.com/4chao/preset.git ; git fetch template && git merge template/master -m '🥝 upgrade: template'",
     "prepare": "husky install",
@@ -57,12 +58,15 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.4.0",
+    "espower-source": "^2.3.0",
     "htmlparser2": "^7.2.0",
     "husky": "^7.0.4",
+    "jsdom": "^19.0.0",
     "lint-staged": "^12.3.2",
     "normalize-path": "^3.0.0",
     "patch-package": "^6.4.7",
     "picocolors": "^1.0.0",
+    "power-assert": "^1.6.1",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "sass": "^1.49.9",
@@ -71,7 +75,8 @@
     "unplugin-auto-import": "^0.6.6",
     "vite": "^2.7.13",
     "vite-plugin-inspect": "^0.3.15",
-    "vite-plugin-restart": "^0.1.1"
+    "vite-plugin-restart": "^0.1.1",
+    "vitest": "^0.7.10"
   },
   "config": {
     "commitizen": {

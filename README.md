@@ -1,4 +1,6 @@
 <h1 align="center">Uniapp Preset</h1>
+<div align="center">🌁 基于 uniapp，快速，优雅的全栈预设模板</div>
+<br>
 <div align="center">
 <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" height="31">
 <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="31">
@@ -30,8 +32,9 @@
     - [API 自动引入](#api-自动引入)
     - [根组件自动引入](#根组件自动引入)
     - [uView UI](#uview-ui)
-    - [更新模板](#更新模板)
     - [原子化 css](#原子化-css)
+    - [更新模板](#更新模板)
+    - [单元测试](#单元测试)
   - [🧰 Utils](#-utils)
     - [页面跳转](#页面跳转)
     - [API 请求封装 (TODO)](#api-请求封装-todo)
@@ -45,23 +48,18 @@
 
 ## 💄 Features
 
-已实现：
-
-- 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
-- 随时更新 - 妈妈再也不用担心项目不能用脚手架的新功能了
-- 各种自动按需引入 - 减少代码量，保护你娇弱的手指
-- 自动路由配置 - 全自动化构建 pages.json 文件
-- 原子化 css - 并且支持小程序使用 Attributify 风格
-- 超多 utils - 工具函数加快开发效率
-- uView UI 组件库 - 我偷偷适配了 Vue3 哦
-
-TODO:
-
-- [ ] 完善更新日志流程
-- [ ] 添加 axios 模块，构建请求封装
-- [ ] 添加 UniCloud-ts 基础框架 (`src/app/server/`)
-- [ ] 页面跳转传参改为事件机制
-- [ ] 添加单元测试工作流 (mocha & power-assert)
+- ✅ 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
+- ✅ 随时更新 - 妈妈再也不用担心项目不能用脚手架的新功能了
+- ✅ 各种自动按需引入 - 减少代码量，保护你娇弱的手指
+- ✅ 自动路由配置 - 全自动化构建 pages.json 文件
+- ✅ 原子化 css - 并且支持小程序使用 Attributify 风格
+- ✅ 超多 utils - 工具函数加快开发效率
+- ✅ uView UI 组件库 - 我偷偷适配了 Vue3 哦
+- ✅ vitest + power-assert 单测 - 最简单的 assert, 最极致的享受
+- 🚧 完善更新日志流程
+- 🚧 添加 axios 模块，构建请求封装
+- 🚧 添加 UniCloud-ts 基础框架 (`src/app/server/`)
+- 🚧 页面跳转传参改为事件机制
 
 **欢迎大家提交 PR 和 Issue**
 
@@ -190,16 +188,6 @@ docs: https://www.uviewui.com/components/intro.html
 
 适配 vue3 可能会带来一些 bug, 你也可以不使用这个库
 
-#### 更新模板
-
-执行`yarn upgrade:template`即可更新模板
-
-window 可能有问题，可以按照下面手动更新：
-
-- `git remote add template https://github.com/4chao/preset.git`
-- `git fetch template`
-- `git merge template/master -m '🥝 upgrade: template'`
-
 #### 原子化 css
 
 playground: https://unocss.antfu.me/
@@ -218,6 +206,28 @@ docs: https://github.com/unocss/unocss
 1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台将会由`build/vite-plugin-mp-attr-fix.ts`转换成有`data-`前缀的 dataset
 2. 小程序 wxss 不支持`hover:`这种类名前缀会报错，请使用`hover-`前缀
 3. 如果你有更好的解决方案欢迎 PR
+
+#### 更新模板
+
+执行`yarn upgrade:template`即可更新模板
+
+window 可能有问题，可以按照下面手动更新：
+
+- `git remote add template https://github.com/4chao/preset.git`
+- `git fetch template`
+- `git merge template/master -m '🥝 upgrade: template'`
+
+#### 单元测试
+
+在`test`目录下编写测试用例后，运行`yarn test`即可进行单元测试
+
+Thanks to [power-assert](https://github.com/power-assert-js/power-assert)，你现在可以获得非常美妙的断言报错信息，即使是复杂的数据结构也不在话下
+
+（适配 espower 的插件源码在`build/vite-plugin-espower.ts`
+
+<img width="543" alt="image" src="https://user-images.githubusercontent.com/26431026/159885473-30cb69c1-045a-495f-aa91-9eed4a28dc46.png">
+<img width="607" alt="image" src="https://user-images.githubusercontent.com/26431026/159883357-43092e26-85da-49ed-83d7-5be61f1faf28.png">
+<img width="789" alt="image" src="https://user-images.githubusercontent.com/26431026/159884020-f005561b-2e17-4a9b-b3c3-c4e2a0049702.png">
 
 ### 🧰 Utils
 
