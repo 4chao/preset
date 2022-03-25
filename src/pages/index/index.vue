@@ -1,16 +1,16 @@
 <template>
   <meta title="主页" title:微信="微信端主页" />
-  <div flex-center-col pt2rem>
-    <div text-4xl py-1rem>
+  <div flex-center-col pt100>
+    <div text-4xl py-25>
       <div class="icon" i-ri-leaf-fill inline-block></div>
     </div>
     <p>
       <em text-sm opacity-75>快速，优雅的全栈预设模板</em>
     </p>
-    <div py-1rem>
+    <div py-25>
       <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
     </div>
-    <div pb-2rem>
+    <div py-25>
       <u-button
         text="开冲"
         :disabled="!name"

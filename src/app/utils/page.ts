@@ -18,11 +18,10 @@ const pageTools = {
       const pkg = { data: obj, from: currentPath, t }
       //TODO: 改成事件机制
       const querystr = encode(JSON.stringify(pkg)).replace(/=/g, '等')
-      console.log(`to ${path}`, obj ? `\n` : '', obj || '')
-      app.info(`页面切换`, obj || '', '=>' + path)
       uni.navigateTo({
         url: path + '?q=' + querystr,
         fail: err => console.log(err),
+        success: () => app.info(`页面切换`, obj || '', '=>' + path),
       })
       return new Promise<any>(r => uni.$once(t, r))
     },
@@ -58,6 +57,8 @@ export default function () {
   Object.assign(app, pageTools)
 }
 
+type pageType = typeof pageTools
+
 declare global {
-  interface App extends Is<typeof pageTools> {}
+  interface App extends pageType {}
 }

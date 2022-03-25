@@ -1,8 +1,8 @@
 diff --git a/node_modules/@unocss/preset-mini/dist/chunks/default.cjs b/node_modules/@unocss/preset-mini/dist/chunks/default.cjs
-index c1e8a05..a79a785 100644
+index c1e8a05..77bb65b 100644
 --- a/node_modules/@unocss/preset-mini/dist/chunks/default.cjs
 +++ b/node_modules/@unocss/preset-mini/dist/chunks/default.cjs
-@@ -108,22 +108,25 @@ const lineWidth = {
+@@ -108,22 +108,28 @@ const lineWidth = {
    DEFAULT: "1px",
    none: "0px"
  };
@@ -38,17 +38,20 @@ index c1e8a05..a79a785 100644
 +  "8xl",
 +  "9xl",
 +].reduce((o, k, i) => {
-+  o[k] = (i * 4/3).toFixed(2) + "vw";
++  if(process.env.UNI_PLATFORM.startsWith('app'))
++    o[k] = (i * 4 / 3).toFixed(2) + "vw";
++  else
++    o[k] = (i * 10).toFixed(2) + "rpx";
 +  return o
 +}, {});
  const duration = {
    DEFAULT: "150ms",
    none: "0ms"
 diff --git a/node_modules/@unocss/preset-mini/dist/chunks/default.mjs b/node_modules/@unocss/preset-mini/dist/chunks/default.mjs
-index 195bea6..f4e84bf 100644
+index 195bea6..f2870eb 100644
 --- a/node_modules/@unocss/preset-mini/dist/chunks/default.mjs
 +++ b/node_modules/@unocss/preset-mini/dist/chunks/default.mjs
-@@ -106,22 +106,25 @@ const lineWidth = {
+@@ -106,22 +106,28 @@ const lineWidth = {
    DEFAULT: "1px",
    none: "0px"
  };
@@ -84,14 +87,17 @@ index 195bea6..f4e84bf 100644
 +  "8xl",
 +  "9xl",
 +].reduce((o, k, i) => {
-+  o[k] = (i * 4/3).toFixed(2) + "vw";
++  if(process.env.UNI_PLATFORM.startsWith('app'))
++    o[k] = (i * 4 / 3).toFixed(2) + "vw";
++  else
++    o[k] = (i * 10).toFixed(2) + "rpx";
 +  return o
 +}, {});
  const duration = {
    DEFAULT: "150ms",
    none: "0ms"
 diff --git a/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs b/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
-index 6d93a2a..3ab0654 100644
+index 6d93a2a..5f9a4fc 100644
 --- a/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
 +++ b/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
 @@ -389,7 +389,7 @@ function rem(str) {
@@ -99,12 +105,12 @@ index 6d93a2a..3ab0654 100644
    const num = parseFloat(n);
    if (!Number.isNaN(num))
 -    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
-+    return unit ? `${round(num)}${unit}` : `${round(num)}vw`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM.startsWith('app') ? `${round(num / 7.5)}vw` : `${round(num)}rpx`;
  }
  function px(str) {
    if (str.match(unitOnlyRE))
 diff --git a/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs b/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
-index 052ab94..93b6e03 100644
+index 052ab94..e0dccd3 100644
 --- a/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
 +++ b/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
 @@ -387,7 +387,7 @@ function rem(str) {
@@ -112,7 +118,7 @@ index 052ab94..93b6e03 100644
    const num = parseFloat(n);
    if (!Number.isNaN(num))
 -    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
-+    return unit ? `${round(num)}${unit}` : `${round(num)}vw`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM.startsWith('app') ? `${round(num / 7.5)}vw` : `${round(num)}rpx`;
  }
  function px(str) {
    if (str.match(unitOnlyRE))

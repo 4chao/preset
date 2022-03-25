@@ -21,6 +21,7 @@ export default defineConfig({
       lodash: 'lodash-es',
     },
   },
+  server: { watch: { ignored: ['**/dist/**'] } },
   plugins: [
     Inspect(), //vite分析工具
     MpAttrFix(), //修复小程序不能使用attr的问题
