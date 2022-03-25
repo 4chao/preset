@@ -10,8 +10,19 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - name: Install and Build
-        run: yarn && yarn build:h5
+      - name: Get yarn cache directory path 🧶
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache 🔍
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install and Build ✨
+        run: yarn --prefer-offline && yarn build:h5
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
