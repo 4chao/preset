@@ -1,6 +1,8 @@
 <h1 align="center">Uniapp Preset</h1>
 <div align="center">🌁 基于 uniapp，快速，优雅的全栈预设模板</div>
 <br>
+<a href="https://4chao.github.io/preset/"><div align="center">DEMO</div></a>
+<br>
 <div align="center">
 <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" height="31">
 <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="31">

@@ -14,6 +14,7 @@ import MpAttrFix from './build/vite-plugin-mp-attr-fix'
 import Espower from './build/vite-plugin-espower'
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
