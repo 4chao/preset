@@ -19,6 +19,7 @@ const pageTools = {
       //TODO: 改成事件机制
       const querystr = encode(JSON.stringify(pkg)).replace(/=/g, '等')
       console.log(`to ${path}`, obj ? `\n` : '', obj || '')
+      app.info(`页面切换`, obj || '', '=>' + path)
       uni.navigateTo({
         url: path + '?q=' + querystr,
         fail: err => console.log(err),

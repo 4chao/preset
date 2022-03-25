@@ -13,15 +13,17 @@
 </template>
 
 <script setup lang="ts">
-  import MescrollBody from 'mescroll-uni/mescroll-body.vue'
-  import { useQuery, ScrollSymbol, ScrollOptions } from '@/hooks'
-  const { t } = $(useQuery())
+import MescrollBody from 'mescroll-uni/mescroll-body.vue'
+import { useQuery, ScrollSymbol, ScrollOptions } from '@/hooks'
+const { t } = $(useQuery())
 
-  onUnload(() => uni.$off(t)) // 页面卸载,解绑回调事件
+onUnload(() => uni.$off(t)) // 页面卸载,解绑回调事件
 
-  const { mescroll, fetch, enable } = $(inject<ScrollOptions>(ScrollSymbol) || ({} as any))
-  let enableUp = $computed(() => ['all', 'up'].some((e) => e == enable))
-  let enableDown = $computed(() => ['all', 'down'].some((e) => e == enable))
+// mescroll 提供上拉加载下拉刷新能力
+// 文档: https://www.mescroll.com/uni.html
+const { mescroll, fetch, enable } = $(inject<Partial<ScrollOptions>>(ScrollSymbol, {}))
+let enableUp = $computed(() => ['all', 'up'].some(e => e == enable))
+let enableDown = $computed(() => ['all', 'down'].some(e => e == enable))
 </script>
 
 <style></style>
