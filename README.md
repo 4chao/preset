@@ -207,9 +207,9 @@ docs: https://github.com/unocss/unocss
 
 1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台将会由`build/vite-plugin-mp-attr-fix.ts`转换成有`data-`前缀的 dataset
 2. 小程序 wxss 不支持`hover:`这种类名前缀会报错，请使用`hover-`前缀
-3. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 下 unocss 中的 rpx 单位不会被转义，所以 app 平台中会隐式转为 $\frac{1}{7.5}$vw, 所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
+3. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 和 h5 下 rpx 单位其实由 uniapp 转换为 $\frac{1}{32}$ rem 实现的，所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
 4. 同样的，`paxs`,`pasm`等尺寸也会在 app 被转换。规则：`xs = 10rpx, sm = 20rpx`以此类推
-5. 由于 h5 平台未经转换，所以 rpxCalcMaxDeviceWidth 等属性不受影响（当然 app 平台会受影响所以 app 宽屏需求请自定义长度工具类）
+5. 由于 3 中转换逻辑与 uniapp 官方相同，所以 rpxCalcMaxDeviceWidth 等属性不受影响
 6. patch 源码：`patches/@unocss+preset-mini+**.patch`
 7. 如果你有更好的解决方案欢迎 PR
 
