@@ -5,6 +5,7 @@ import { createStore } from 'vuex'
 import { createProxy, extractVuexModule, VuexModule } from 'vuex-class-component'
 import createPersistedState from 'vuex-persistedstate'
 import vuexProxy from './proxy'
+import config from './config'
 
 export default function () {
   const ModuleList = {}
@@ -21,10 +22,11 @@ export default function () {
     plugins: [
       createPersistedState({
         storage: {
-          getItem: (key) => uni.getStorageSync(key),
+          getItem: key => uni.getStorageSync(key),
           setItem: (key, data) => uni.setStorage({ key, data }),
-          removeItem: (key) => uni.removeStorage({ key }),
+          removeItem: key => uni.removeStorage({ key }),
         },
+        ...config.persistedstate,
       }),
     ],
   })
@@ -36,14 +38,14 @@ export default function () {
   }
 
   //vuex代理,使用代理做一些拦截操作
-  Object.keys(ModuleList).forEach((key) => {
+  Object.keys(ModuleList).forEach(key => {
     app[key] = new Proxy(
       {},
       {
         set: (target, property, value, receiver) =>
           vuexProxy.set(ModuleList[key], property, value, key),
         get: (target, property, receiver) => vuexProxy.get(ModuleList[key], property, key),
-      }
+      },
     )
   })
   return store
