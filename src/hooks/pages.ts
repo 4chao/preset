@@ -5,7 +5,7 @@
  */
 export function useQuery(fn?: (...args: any[]) => void) {
   const query = reactive<{ data?: any; id?: string; from?: string }>({
-    data: null,
+    data: {},
     id: null,
     from: null,
   })
