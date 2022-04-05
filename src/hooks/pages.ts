@@ -1,33 +1,24 @@
-import { decode } from 'js-base64'
 /**
  * 获得当前页面跳转携带的参数和信息
  * (依赖 app.to )
  * @param fn 回调函数
- * @returns toRefs<{ data?: any; t?: number; from?: string }>
  */
 export function useQuery(fn?: (...args: any[]) => void) {
-  const query = reactive<{ data?: any; t?: string; from?: string }>({
+  const query = reactive<{ data?: any; id?: string; from?: string }>({
     data: null,
-    t: null,
+    id: null,
     from: null,
   })
+  function getQuery() {
+    const id = getCurrentPages().pop()['$page'].fullPath.split('?id=')[1]
+    uni.$emit(id + '_query', pkg => Object.assign(query, pkg))
+    fn && fn(query.data)
+  }
 
   try {
-    const querystr = getCurrentPages()
-      .pop()
-      ['$page'].fullPath.split('?q=')[1]
-      ?.replace(/%E7%AD%89/g, '=')
-    querystr && Object.assign(query, JSON.parse(decode(querystr)))
-    fn && fn(query.data)
+    getQuery()
   } catch (error) {
-    onLoad(() => {
-      const querystr = getCurrentPages()
-        .pop()
-        ['$page'].fullPath.split('?q=')[1]
-        ?.replace(/%E7%AD%89/g, '=')
-      querystr && Object.assign(query, JSON.parse(decode(querystr)))
-      fn && fn(query.data)
-    })
+    onLoad(getQuery)
   }
   return toRefs(query)
 }
@@ -47,7 +38,6 @@ export interface ScrollOptions {
  *   .onLoad((page) => {
  *     page.endSuccess()
  *   })
- * @returns toRefs<{ data?: any; t?: number; from?: string }>
  */
 export function useScroll(onPageScroll?: typeof import('@dcloudio/uni-app')['onPageScroll']) {
   const scrollOptions = reactive<ScrollOptions>({

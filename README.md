@@ -244,9 +244,10 @@ Thanks to [power-assert](https://github.com/power-assert-js/power-assert)，你�
 #### 页面跳转
 
 ```ts
+// 使用#作为分包标识, 详情看下方表格
 app.to('/pages/aaa/bbb') // 跳转到 /pages/aaa/bbb.vue 页面
-app.to('ccc/ddd') // 跳转到 /pages/ccc/ddd.vue 页面
-app.to('eee') // 跳转到 当前分包下的 ddd.vue 页面
+app.to('#ccc/ddd') // 跳转到 /pages/ccc/ddd.vue 页面
+app.to('eee') // 跳转到 当前目录下的 eee.vue 页面
 
 // 跳转到 当前分包下的 fff.vue 页面 并携带参数
 app.to('fff',{g:'h'})
@@ -260,8 +261,25 @@ app.back() // 返回上一页
 app.back({i:'j'})
 // 在上一个页面的相应app.to的then方法中获取回调参数:
 app.to('...').then(res => {...})
-
 ```
+
+**页面路径解析规则：**
+
+> $currentGroup 为当前分包
+
+| 说明                            | 输入           | 解析                          |
+| ------------------------------- | -------------- | ----------------------------- |
+| #后为包名，路径留空默认为 index | #group         | /pages/group/index"           |
+| 同上                            | #group/        | /pages/group/index"           |
+| #后为包名，提供路径             | #group/foo     | /pages/group/foo"             |
+| #留空默认当前分包并提供路径     | #/foo/bar      | /pages/$currentGroup/foo/bar" |
+| 默认当前分包，默认解析到 index  | #              | /pages/$currentGroup/index"   |
+| 同上                            | #/             | /pages/$currentGroup/index"   |
+| 不涉及分包，遵循 uniapp 标准    | foo/bar        | foo/bar"                      |
+| 不涉及分包，遵循 uniapp 标准    | foo/bar/baz    | foo/bar/baz"                  |
+| 不涉及分包，遵循 uniapp 标准    | /pages/foo/bar | /pages/foo/bar"               |
+| 不涉及分包，遵循 uniapp 标准    | ./foo/bar      | ./foo/bar"                    |
+| 不涉及分包，遵循 uniapp 标准    | ../foo         | ../foo"                       |
 
 #### API 请求封装 (TODO)
 

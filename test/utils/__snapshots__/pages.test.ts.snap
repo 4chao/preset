@@ -1,0 +1,17 @@
+// Vitest Snapshot v1
+
+exports[`页面工具 > 使用#作为包名标识 1`] = `
+[
+  "#group --------------> /pages/group/index",
+  "#group/ -------------> /pages/group/index",
+  "#group/foo ----------> /pages/group/foo",
+  "#/foo/bar -----------> /pages/$currentGroup/foo/bar",
+  "# -------------------> /pages/$currentGroup/index",
+  "#/ ------------------> /pages/$currentGroup/index",
+  "foo/bar -------------> foo/bar",
+  "foo/bar/baz ---------> foo/bar/baz",
+  "/pages/foo/bar ------> /pages/foo/bar",
+  "./foo/bar -----------> ./foo/bar",
+  "../foo --------------> ../foo",
+]
+`;

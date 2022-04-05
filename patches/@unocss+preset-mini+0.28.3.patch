@@ -38,7 +38,7 @@ index c1e8a05..e250856 100644
 +  "8xl",
 +  "9xl",
 +].reduce((o, k, i) => {
-+  if(process.env.UNI_PLATFORM.startsWith('mp'))
++  if(process.env.UNI_PLATFORM?.startsWith('mp'))
 +    o[k] = (i * 10).toFixed(2) + "rpx";
 +  else
 +    o[k] = (i / 3.2).toFixed(2) + "rem";
@@ -87,7 +87,7 @@ index 195bea6..682844e 100644
 +  "8xl",
 +  "9xl",
 +].reduce((o, k, i) => {
-+  if(process.env.UNI_PLATFORM.startsWith('mp'))
++  if(process.env.UNI_PLATFORM?.startsWith('mp'))
 +    o[k] = (i * 10).toFixed(2) + "rpx";
 +  else
 +    o[k] = (i / 3.2).toFixed(2) + "rem";
@@ -105,7 +105,7 @@ index 6d93a2a..de09cac 100644
    const num = parseFloat(n);
    if (!Number.isNaN(num))
 -    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
-+    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
  }
  function px(str) {
    if (str.match(unitOnlyRE))
@@ -118,7 +118,7 @@ index 052ab94..4c4b604 100644
    const num = parseFloat(n);
    if (!Number.isNaN(num))
 -    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
-+    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
  }
  function px(str) {
    if (str.match(unitOnlyRE))

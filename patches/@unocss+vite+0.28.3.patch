@@ -6,7 +6,7 @@ index ada5876..ae7bd15 100644
        enforce: "pre",
        buildStart() {
          tasks = [];
-+        if(!process.env.UNI_PLATFORM.startsWith('app'))
++        if(!process.env.UNI_PLATFORM?.startsWith('app'))
          vfsLayerMap.clear();
        },
        transform(code, id) {
@@ -18,7 +18,7 @@ index 30eadfd..2323d69 100644
        enforce: "pre",
        buildStart() {
          tasks = [];
-+        if(!process.env.UNI_PLATFORM.startsWith('app'))
++        if(!process.env.UNI_PLATFORM?.startsWith('app'))
          vfsLayerMap.clear();
        },
        transform(code, id) {
