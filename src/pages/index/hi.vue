@@ -11,11 +11,19 @@
       <u-input v-model="text" placeholder="喵喵喵" inputAlign="center" />
     </div>
     {{ text }}
-    <div py-25 pb-50>
+    <div py-25 pb-50 flex-center>
       <u-button
         text="返回"
+        :customStyle="{ width: '200rpx' }"
         color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
         @click="app.back({ text })"
+      ></u-button>
+      <div px20></div>
+      <u-button
+        text="返回并抛个异常"
+        :customStyle="{ width: '300rpx' }"
+        color="linear-gradient(to right, #4facfe 0%, #00f2fe 100%)"
+        @click="app.back.reject({ text })"
       ></u-button>
     </div>
   </div>
@@ -23,7 +31,7 @@
 
 <script setup lang="ts">
 import { useQuery } from '@/hooks'
-const { data } = $(useQuery())
+const { data } = $(useQuery({ name: '默认初始值' }))
 const text = $ref('')
 </script>
 

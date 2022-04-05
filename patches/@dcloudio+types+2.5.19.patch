@@ -1,0 +1,21 @@
+diff --git a/node_modules/@dcloudio/types/uni-app/uni.d.ts b/node_modules/@dcloudio/types/uni-app/uni.d.ts
+index f94d195..0a6ac67 100644
+--- a/node_modules/@dcloudio/types/uni-app/uni.d.ts
++++ b/node_modules/@dcloudio/types/uni-app/uni.d.ts
+@@ -1,5 +1,15 @@
+ declare namespace UniApp {
+-    interface Uni {
++    type UniWithOverload<T = BaseUni> = {
++        [P in keyof T]: T[P] extends (options: { success?: any; fail?: any }) => any
++          ? (
++              options?: Omit<Parameters<T[P]>[0], 'success' | 'fail' | 'complete'>,
++            ) => Promise<Parameters<Parameters<T[P]>[0]['success']>[0]>
++          : T[P]
++      } & BaseUni
++      
++    interface Uni extends UniWithOverload { }
++
++    interface BaseUni {
+         /**
+          * 将 Base64 字符串转成 ArrayBuffer 对象
+          *

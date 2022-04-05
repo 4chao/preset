@@ -37,6 +37,9 @@ function sayHi() {
         ? uni.showToast({ title: '收到返回值: ' + text })
         : uni.showToast({ title: '未收到返回值', icon: 'none' }),
     )
+    .catch(({ text }) => {
+      uni.showToast({ title: '子页面抛出异常' + text, icon: 'none' })
+    })
 }
 
 useScroll(onPageScroll).onLoad(page => {

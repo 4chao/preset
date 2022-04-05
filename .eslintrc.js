@@ -136,7 +136,7 @@ module.exports = {
     'no-octal-escape': 2,
     'no-path-concat': 2,
     'no-proto': 'off',
-    'no-redeclare': 2,
+    'no-redeclare': 'off',
     'no-regex-spaces': 2,
     'no-return-assign': [2, 'except-parens'],
     'no-self-assign': 2,

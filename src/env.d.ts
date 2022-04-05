@@ -8,3 +8,11 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare namespace UniApp {
+  interface Uni {
+    $u: any
+  }
+}
+
+type AObjectHasAnyKeys = { [key in any]: any }

@@ -263,23 +263,23 @@ app.back({i:'j'})
 app.to('...').then(res => {...})
 ```
 
-**页面路径解析规则：**
+__页面路径解析规则：__
 
 > $currentGroup 为当前分包
 
-| 说明                            | 输入           | 解析                          |
-| ------------------------------- | -------------- | ----------------------------- |
-| #后为包名，路径留空默认为 index | #group         | /pages/group/index"           |
-| 同上                            | #group/        | /pages/group/index"           |
-| #后为包名，提供路径             | #group/foo     | /pages/group/foo"             |
-| #留空默认当前分包并提供路径     | #/foo/bar      | /pages/$currentGroup/foo/bar" |
-| 默认当前分包，默认解析到 index  | #              | /pages/$currentGroup/index"   |
-| 同上                            | #/             | /pages/$currentGroup/index"   |
-| 不涉及分包，遵循 uniapp 标准    | foo/bar        | foo/bar"                      |
-| 不涉及分包，遵循 uniapp 标准    | foo/bar/baz    | foo/bar/baz"                  |
-| 不涉及分包，遵循 uniapp 标准    | /pages/foo/bar | /pages/foo/bar"               |
-| 不涉及分包，遵循 uniapp 标准    | ./foo/bar      | ./foo/bar"                    |
-| 不涉及分包，遵循 uniapp 标准    | ../foo         | ../foo"                       |
+|说明|输入|解析|
+|-|-|-|
+| #后为包名，路径留空默认为 index | #group | /pages/group/index |
+| 同上 | #group/ | /pages/group/index |
+| #后为包名，提供路径 | #group/foo | /pages/group/foo |
+| #留空默认当前分包并提供路径 | #/foo/bar | /pages/$currentGroup/foo/bar |
+| 默认当前分包，默认解析到 index | # | /pages/$currentGroup/index |
+| 同上 | #/ | /pages/$currentGroup/index |
+| 不涉及分包，遵循 uniapp 标准 | foo/bar | foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | foo/bar/baz | foo/bar/baz |
+| 不涉及分包，遵循 uniapp 标准 | /pages/foo/bar | /pages/foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | ./foo/bar | ./foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | ../foo | ../foo |
 
 #### API 请求封装 (TODO)
 
