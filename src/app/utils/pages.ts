@@ -15,9 +15,10 @@ let to = debounce(
 
     const pkg = { data: obj, from: currentPath, id }
     uni.$on(id + '_query', cb => cb(pkg))
+    let url = getPath(path, currentGroup)
     uni
-      .navigateTo({ url: getPath(path, currentGroup) + '?id=' + id })
-      .then(() => app.info('页面切换', obj || '', '=> ' + path))
+      .navigateTo({ url: url + '?id=' + id })
+      .then(() => app.info('页面切换', obj || '', '=>', path == url ? path : `${path} (${url})`))
       .catch(err => app.error('页面切换失败', '=>' + path, err))
     return new Promise<any>((r, e) => (uni.$once(id + '_resolve', r), uni.$once(id + '_reject', e)))
   },

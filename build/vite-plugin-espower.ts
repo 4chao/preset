@@ -21,6 +21,8 @@ export default function (options = {} as any) {
           'assert.notStrictEqual(actual, expected, [message])',
           'assert.deepEqual(actual, expected, [message])',
           'assert.notDeepEqual(actual, expected, [message])',
+          'assert.deepStrictEqual(actual, expected, [message])',
+          'assert.notDeepStrictEqual(actual, expected, [message])',
         ],
       })
       code = code.replace('importmetahotaccept', 'import.meta.hot.accept')

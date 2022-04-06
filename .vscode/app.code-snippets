@@ -30,11 +30,6 @@
       "<style lang=\"scss\"></style>"
     ]
   },
-  "log": {
-    "scope": "vue,javascript,typescript",
-    "prefix": "log",
-    "body": ["app.log($1)"]
-  },
   "debug": {
     "scope": "vue,javascript,typescript",
     "prefix": "debug",

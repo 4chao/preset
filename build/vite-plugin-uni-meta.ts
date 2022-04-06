@@ -1,10 +1,37 @@
 import { Parser } from 'htmlparser2'
 import fs from 'fs'
+import { deepListDirSync } from 'deep-list-dir'
 import path from 'path'
 import c from 'picocolors'
 import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
 import AppConfig from '../src/app.config'
+
+export const defaultPagesRE = /src\/pages\/((?!.+(component(s)?|static).+).)*\.vue$/
+export const defaultMetaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im
+export function MetaParser(str, alias, preset): Record<string, any> {
+  let attr
+  let parser = new Parser(
+    { onopentag: (_, attributes) => (attr = attributes) },
+    { lowerCaseAttributeNames: false },
+  )
+  parser.write(str)
+  parser.end()
+  if (!attr) return {}
+  return replaceKeysDeep(
+    Object.entries(attr).reduce((style, e: [string, string]) => {
+      let [name, platform] = e[0].split(':')
+      const add = o => merge(style, o)
+      // eslint-disable-next-line no-eval
+      if (!name) return add({ [platform]: (0, eval)('str =' + e[1]) }) //以:开头的解析为object
+      if (!e[1]) return add(preset?.[name] || {}) // 不含value的解析为preset
+      if (platform) return add({ [platform]: { [name]: e[1] } }) // a:b="c"解析为{b:{a:"c"}}
+      if (name) return add({ [name]: e[1] }) // a="b"解析为{a:"b"}
+    }, {}),
+    alias,
+  )
+}
+
 export interface Options {
   pagesRE: RegExp
   metaRE: RegExp
@@ -17,8 +44,8 @@ export interface Options {
 
 export default function (options: Partial<Options> = {}) {
   let {
-    pagesRE = /pages\/([^\/]*?)\/([^\/]*?\.vue)$/,
-    metaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im,
+    pagesRE = defaultPagesRE,
+    metaRE = defaultMetaRE,
     pagesBasePath = 'src/pages',
     alias = {},
     pluginName = 'uni-meta',
@@ -36,9 +63,10 @@ export default function (options: Partial<Options> = {}) {
   function generateMeta() {
     //本来想用异步,但无法保证先于uni插件加载,所以改成同步
     pageMeta = Object.fromEntries(
-      findPage()
-        .filter(file => pagesRE.test(normalizePagePathFromBase(file)))
-        .map(file => [normalizePagePath(file), getMeta(fs.readFileSync(file, 'utf-8')) || '{}']),
+      deepListDirSync(pagesBasePath, { pattern: pagesRE, base: '/' }).map(file => [
+        normalizePagePath(file),
+        getMeta(fs.readFileSync(file, 'utf-8')) || '{}',
+      ]),
     )
     debug(`pageMeta:`, pageMeta)
 
@@ -49,31 +77,21 @@ export default function (options: Partial<Options> = {}) {
     }
 
     Object.entries(pageMeta).forEach(([path, style]) => {
-      const [packageName, pageName] = path.split('/')
+      style = JSON.parse(style)
+      let [packageName, ...pageName]: any = path.split('/')
+      pageName = pageName.join('/')
       if (packageName == 'index') {
-        META['pages'][pageName.includes('index') ? 'unshift' : 'push']({
+        //主包
+        META['pages'][pageName == 'index' || pageName == '_index' ? 'unshift' : 'push']({
           path: [basePath, packageName, pageName].join('/'),
-          style: JSON.parse(style),
+          style,
         })
       } else {
         const packagePath = [basePath, packageName].join('/')
         const sub = META['subPackages'].find(item => item.root == packagePath)
-        if (!sub) {
-          META['subPackages'].push({
-            root: packagePath,
-            pages: [
-              {
-                path: pageName,
-                style: JSON.parse(style),
-              },
-            ],
-          })
-        } else {
-          sub['pages'].push({
-            path: pageName,
-            style: JSON.parse(style),
-          })
-        }
+        if (!sub)
+          META['subPackages'].push({ root: packagePath, pages: [{ path: pageName, style }] })
+        else sub['pages'].push({ path: pageName, style })
       }
     })
 
@@ -84,7 +102,7 @@ export default function (options: Partial<Options> = {}) {
         '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
         '// 请修改 app.config.ts 的 page 导出\n' +
         '\n' +
-        JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, alias) || {})),
+        JSON.stringify(merge(META, replaceKeysDeep(AppConfig.pages, alias) || {}), null, 2),
     )
 
     debug(`META:`, META)
@@ -132,34 +150,7 @@ export default function (options: Partial<Options> = {}) {
   function getMeta(code) {
     let str = code.match(metaRE)?.[0]
     if (!str) return
-    let attr
-    let parser = new Parser(
-      {
-        onopentag(name, attributes) {
-          attr = attributes
-        },
-      },
-      { lowerCaseAttributeNames: false },
-    )
-    parser.write(str)
-    parser.end()
-    return (
-      attr &&
-      JSON.stringify(
-        replaceKeysDeep(
-          Object.entries(attr).reduce((style, e: [string, string]) => {
-            let [name, platform] = e[0].split(':')
-            const add = o => merge(style, o)
-            // eslint-disable-next-line no-eval
-            if (!name) return add({ [platform]: (0, eval)('str =' + e[1]) }) //以:开头的解析为object
-            if (!e[1]) return add(AppConfig['preset']?.[name] || {}) // 不含value的解析为preset
-            if (platform) return add({ [platform]: { [name]: e[1] } }) // a:b="c"解析为{b:{a:"c"}}
-            if (name) return add({ [name]: e[1] }) // a="b"解析为{a:"b"}
-          }, {}),
-          alias,
-        ),
-      )
-    )
+    return JSON.stringify(MetaParser(str, alias, AppConfig['preset']))
   }
 
   /**
@@ -169,17 +160,17 @@ export default function (options: Partial<Options> = {}) {
    * @param {number} deep 查询深度
    * @returns {string[]} 查找到的页面路径
    */
-  function findPage(filePath = pagesBasePath, list = [], deep = 1) {
-    if (deep > 2) return list
-    filePath = path.resolve(filePath)
-    fs.readdirSync(filePath).forEach(filename => {
-      const filedir = path.join(filePath, filename)
-      const stats = fs.statSync(filedir)
-      if (stats.isFile() && /\.n?vue$/.test(filename)) list.push(filedir)
-      if (stats.isDirectory()) findPage(filedir, list, deep + 1)
-    })
-    return list
-  }
+  // function findPage(filePath = pagesBasePath, list = [], deep = 1) {
+  //   if (deep > 2) return list
+  //   filePath = path.resolve(filePath)
+  //   fs.readdirSync(filePath).forEach(filename => {
+  //     const filedir = path.join(filePath, filename)
+  //     const stats = fs.statSync(filedir)
+  //     if (stats.isFile() && /\.n?vue$/.test(filename)) list.push(filedir)
+  //     if (stats.isDirectory()) findPage(filedir, list, deep + 1)
+  //   })
+  //   return list
+  // }
 
   // function touch(path: string) {
   //   const time = new Date()

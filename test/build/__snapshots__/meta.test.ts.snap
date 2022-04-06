@@ -1,0 +1,57 @@
+// Vitest Snapshot v1
+
+exports[`页面元数据 > meta标签匹配 1`] = `
+[
+  "<meta title=\\"foo\\" />",
+  "<meta title=\\"foo\\"></meta>",
+  "<meta title=\\"foo\\">
+  </meta>",
+  "<meta title=\\"foo\\" />",
+  "<meta title=\\"foo\\"></meta>",
+]
+`;
+
+exports[`页面元数据 > meta标签解析 1`] = `
+[
+  {
+    "navigationBarTitleText": "foo",
+  },
+  {
+    "navigationBarTitleText": "foo",
+  },
+  {
+    "navigationBarTitleText": "foo",
+  },
+  {
+    "mp-weixin": {
+      "navigationBarTitleText": "foo",
+    },
+  },
+  {
+    "mp-weixin": {
+      "navigationBarTitleText": "foo",
+    },
+  },
+  {
+    "navigationBarTitleText": "foo",
+    "navigationStyle": "custom",
+  },
+]
+`;
+
+exports[`页面元数据 > 页面路径匹配 1`] = `
+[
+  "src/pages/index/index.vue:                   命中页面",
+  "src/pages/foo/index.vue:                     命中页面",
+  "src/pages/foo/bar/index.vue:                 命中页面",
+  "src/pages/foo/components/bar.vue:            忽略",
+  "src/pages/foo/bar/components/baz.vue:        忽略",
+  "src/pages/foo/bar/component/baz.vue:         忽略",
+  "src/pages/foo/static/bar.vue:                忽略",
+  "src/pages/foo/bar/static/baz.vue:            忽略",
+  "src/pages/static/foo.vue:                    命中页面",
+  "src/pages/component/foo.vue:                 命中页面",
+  "src/pages/components/foo.vue:                命中页面",
+  "src/pages/components/components/foo.vue:     忽略",
+]
+`;

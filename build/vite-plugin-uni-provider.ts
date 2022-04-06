@@ -1,6 +1,7 @@
 import path from 'path'
 import c from 'picocolors'
 import normallize from 'normalize-path'
+import { defaultPagesRE } from './vite-plugin-uni-meta'
 
 export interface Options {
   pagesRE: RegExp
@@ -14,7 +15,7 @@ export interface Options {
 
 export default function (options: Partial<Options> = {}) {
   let {
-    pagesRE = /pages\/([^\/]*?)\/([^\/]*?\.vue)$/,
+    pagesRE = defaultPagesRE,
     name = 'sys',
     configFile = 'vite.config.js',
     pagesBasePath = 'src/pages',
@@ -65,7 +66,7 @@ export default function (options: Partial<Options> = {}) {
       console.log(
         c.dim(new Date().toLocaleTimeString()),
         c.bold(c.red(`[debug:${pluginName}]`)),
-        ...args
+        ...args,
       )
   }
 }
