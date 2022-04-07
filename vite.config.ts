@@ -7,11 +7,10 @@ import ViteRestart from 'vite-plugin-restart'
 import AutoImport from 'unplugin-auto-import/vite'
 import Inspect from 'vite-plugin-inspect'
 import Unocss from 'unocss/vite'
-import { presetUno, presetAttributify, presetIcons } from 'unocss'
 import UniMeta from './build/vite-plugin-uni-meta'
 import UniProvider from './build/vite-plugin-uni-provider'
-import MpAttrFix from './build/vite-plugin-mp-attr-fix'
 import Espower from './build/vite-plugin-espower'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
@@ -25,16 +24,9 @@ export default defineConfig({
   server: { watch: { ignored: ['**/dist/**'] } },
   plugins: [
     Inspect(), //vite分析工具
-    MpAttrFix(), //修复小程序不能使用attr的问题
     UniMeta(), //自动生成页面meta信息和路由并注册pages.json
     UniProvider(), //自动注册页面全局组件
-    Unocss({
-      presets: [presetUno(), presetAttributify({ prefix: 'data-' }), presetIcons()],
-      shortcuts: {
-        'flex-center': 'flex flex-row justify-center items-center',
-        'flex-center-col': 'flex flex-col justify-center items-center',
-      },
-    }),
+    Unocss(),
     ViteRestart({
       restart: ['src/pages.js', 'src/app.config.ts'],
     }),

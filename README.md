@@ -205,13 +205,17 @@ docs: https://github.com/unocss/unocss
 
 注意：
 
-1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台将会由`build/vite-plugin-mp-attr-fix.ts`转换成有`data-`前缀的 dataset
+1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台在解析 ast 时将 attr 压入 class 中
 2. 小程序 wxss 不支持`hover:`这种类名前缀会报错，请使用`hover-`前缀
-3. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 和 h5 下 rpx 单位其实由 uniapp 转换为 $\frac{1}{32}$ rem 实现的，所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
-4. 同样的，`paxs`,`pasm`等尺寸也会在 app 被转换。规则：`xs = 10rpx, sm = 20rpx`以此类推
-5. 由于 3 中转换逻辑与 uniapp 官方相同，所以 rpxCalcMaxDeviceWidth 等属性不受影响
-6. patch 源码：`patches/@unocss+preset-mini+**.patch`
+3. 同时请不要使用类似`bg="blue-400 hover-blue-500"`这样的 attr, 因为 unocss 解析时不会生成相应类名选择器，应只使用无 value 的 attr
+4. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 和 h5 下 rpx 单位其实由 uniapp 转换为 $\frac{1}{32}$ rem 实现的，所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
+5. 同样的，`paxs`,`pasm`等尺寸也进行了隐式转换。规则：`xs = 10rpx, sm = 20rpx`以此类推
+6. 由于 4 中转换逻辑与 uniapp 官方相同，所以 rpxCalcMaxDeviceWidth 等属性不受影响
 7. 如果你有更好的解决方案欢迎 PR
+
+相关 patches 文件：
+`patches/@unocss+preset-mini+**.patch`
+`patches/@dcloudio+uni-mp-compiler+**.patch`
 
 #### 更新模板
 

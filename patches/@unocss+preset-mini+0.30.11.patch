@@ -1,0 +1,26 @@
+diff --git a/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs b/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
+index 5852751..9b969c4 100644
+--- a/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
++++ b/node_modules/@unocss/preset-mini/dist/chunks/utilities.cjs
+@@ -389,7 +389,7 @@ function rem(str) {
+   const [, n, unit] = match;
+   const num = parseFloat(n);
+   if (!Number.isNaN(num))
+-    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
+ }
+ function px(str) {
+   if (str.match(unitOnlyRE))
+diff --git a/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs b/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
+index 770ce9f..d0f32f4 100644
+--- a/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
++++ b/node_modules/@unocss/preset-mini/dist/chunks/utilities.mjs
+@@ -387,7 +387,7 @@ function rem(str) {
+   const [, n, unit] = match;
+   const num = parseFloat(n);
+   if (!Number.isNaN(num))
+-    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
+ }
+ function px(str) {
+   if (str.match(unitOnlyRE))

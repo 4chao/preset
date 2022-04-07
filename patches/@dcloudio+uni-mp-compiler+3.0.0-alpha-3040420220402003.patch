@@ -1,0 +1,38 @@
+diff --git a/node_modules/@dcloudio/uni-mp-compiler/dist/transforms/transformAttr.js b/node_modules/@dcloudio/uni-mp-compiler/dist/transforms/transformAttr.js
+index d762953..203baf2 100644
+--- a/node_modules/@dcloudio/uni-mp-compiler/dist/transforms/transformAttr.js
++++ b/node_modules/@dcloudio/uni-mp-compiler/dist/transforms/transformAttr.js
+@@ -3,18 +3,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.transformAttr = void 0;
+ const uni_cli_shared_1 = require("@dcloudio/uni-cli-shared");
+ const shared_1 = require("@vue/shared");
++
+ const transformAttr = (node, _) => {
+     if (!(0, uni_cli_shared_1.isElementNode)(node)) {
+         return;
+     }
++    let Attrs = [];
++    let clazz = null;
+     node.props.forEach((prop) => {
+-        if ((0, uni_cli_shared_1.isAttributeNode)(prop) && prop.value) {
++        if ((0, uni_cli_shared_1.isAttributeNode)(prop)) {
++            if (!prop.value) return Attrs.push(prop.name)
+             switch (prop.name) {
+                 case 'style':
+                     prop.value.content = (0, shared_1.stringifyStyle)((0, shared_1.parseStringStyle)(prop.value.content)).slice(0, -1); // 移除最后一个分号，省点大小吧
+                     break;
++                case 'class':
++                    clazz = prop;
++                    break;
+             }
++
+         }
+     });
++    if (!Attrs.length) return
++    if (!clazz?.value) {
++        clazz = { type: 6, name: 'class', value: { type: 2, content: '' } }
++        node.props.push(clazz)
++    }
++    clazz.value.content += ' ' + Attrs.join(' ');
+ };
+ exports.transformAttr = transformAttr;
