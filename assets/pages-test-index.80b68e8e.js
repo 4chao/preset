@@ -1,0 +1,1 @@
+import{o as s,c as a,r,h as o}from"./index.67aaf322.js";import{_ as t,a as e}from"./sys.a30014c8.js";var n=t({},[["render",function(t,n){const f=r(o("sys"),e);return s(),a(f)}]]);export{n as default};
