@@ -10,7 +10,7 @@ onHide(() => {
 })
 </script>
 <style lang="scss">
-// #ifdef APP-VUE
+// #ifndef APP-NVUE
 @import 'uview-ui/index.scss';
 @import '@/styles/color-ui.css';
 @import '@/styles/index.scss';

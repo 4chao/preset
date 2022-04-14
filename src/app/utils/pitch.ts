@@ -2,7 +2,7 @@ import { App as VueApp } from 'vue'
 
 let patch = {
   log: <T>(...args: [T, ...any]) => (
-    app.debug(/(?<=src)(.*?\.vue)/.exec(new Error('123').stack)[0], ...args), args[0]
+    app.debug(/src(.*?\.vue)/.exec(new Error('123').stack)?.[1] || '页面输出', ...args), args[0]
   ),
   any: arg => arg as any,
 }
