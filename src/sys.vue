@@ -29,4 +29,10 @@ let enableUp = $computed(() => ['all', 'up'].some(e => e == enable))
 let enableDown = $computed(() => ['all', 'down'].some(e => e == enable))
 </script>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <style></style>
