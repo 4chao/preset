@@ -12,6 +12,7 @@
 <div align="center">
 <img src="https://img.shields.io/badge/license-MIT-44ccff.svg" height="20">
 <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" height="20">
+<img src="https://img.shields.io/github/workflow/status/4chao/preset/Build%20and%20Deploy" height="20">
 </div>
 <div align="center">
 <img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=small" height="20">
