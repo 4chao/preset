@@ -7,7 +7,7 @@ import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
 import AppConfig from '../src/app.config'
 
-export const defaultPagesRE = /src\/pages\/((?!.+(component(s)?|static).+).)*\.vue$/
+export const defaultPagesRE = /src[\/\\]pages[\/\\]((?!.+(component(s)?|static).+).)*\.vue$/
 export const defaultMetaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im
 export function MetaParser(str, alias, preset): Record<string, any> {
   let attr
