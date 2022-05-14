@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { useQuery } from '@/hooks'
 const { data } = $(useQuery({ name: '默认初始值' }))
 const text = $ref('')
 </script>

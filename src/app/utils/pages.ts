@@ -1,5 +1,4 @@
 import { debounce, DebouncedFuncLeading } from 'lodash'
-import { useQuery } from '@/hooks'
 
 export function getPath(p: string, currentGroup: string) {
   let [group, path] = Array.from(p.match(/^(?:#(.*?)(?:\/|$))?(.*)$/)).slice(1)

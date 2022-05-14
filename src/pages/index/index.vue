@@ -26,8 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { useScroll } from '@/hooks'
-const { name } = $(app.User)
+const name = __filename
 
 function sayHi() {
   app

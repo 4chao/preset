@@ -8,6 +8,7 @@ onShow(() => {
 onHide(() => {
   console.log('App Hide')
 })
+console.log(__filename)
 </script>
 <style lang="scss">
 // #ifndef APP-NVUE

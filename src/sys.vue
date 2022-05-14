@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import MescrollBody from 'mescroll-uni/mescroll-body.vue'
-import { useQuery, ScrollSymbol, ScrollOptions } from '@/hooks'
+import { ScrollOptions } from '@/hooks'
 const { id } = $(useQuery())
 
 // 页面卸载,解绑回调事件

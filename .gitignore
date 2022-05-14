@@ -3,6 +3,7 @@ node_modules/
 unpackage/
 /dist/
 src/pages.json
+/stats.html
 
 yarn.lock
 package-lock.json
