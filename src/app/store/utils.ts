@@ -29,6 +29,9 @@ const $internalHooks = []
 
 function storeFactory(Store, options: StoreOptions = {}) {
   options.name = options.name || options.id || Store['name']
+  options.state || (options.state = {})
+  options.actions || (options.actions = {})
+  options.getters || (options.getters = {})
 
   // prototype props.
   const proto = Store.prototype
@@ -43,9 +46,6 @@ function storeFactory(Store, options: StoreOptions = {}) {
       return
     }
     const descriptor = Object.getOwnPropertyDescriptor(proto, key)!
-    options.state || (options.state = {})
-    options.actions || (options.actions = {})
-    options.getters || (options.getters = {})
 
     if (descriptor.value !== void 0) {
       // methods
