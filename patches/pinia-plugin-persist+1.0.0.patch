@@ -1,0 +1,13 @@
+diff --git a/node_modules/pinia-plugin-persist/dist/pinia-persist.es.js b/node_modules/pinia-plugin-persist/dist/pinia-persist.es.js
+index 1625b71..ee7c6e4 100644
+--- a/node_modules/pinia-plugin-persist/dist/pinia-persist.es.js
++++ b/node_modules/pinia-plugin-persist/dist/pinia-persist.es.js
+@@ -16,7 +16,7 @@ var index = ({ options, store }) => {
+   if ((_a = options.persist) == null ? void 0 : _a.enabled) {
+     const defaultStrat = [{
+       key: store.$id,
+-      storage: sessionStorage
++      storage: {}
+     }];
+     const strategies = ((_c = (_b = options.persist) == null ? void 0 : _b.strategies) == null ? void 0 : _c.length) ? (_d = options.persist) == null ? void 0 : _d.strategies : defaultStrat;
+     strategies.forEach((strategy) => {

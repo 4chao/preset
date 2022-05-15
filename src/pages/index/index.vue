@@ -10,15 +10,15 @@
     <div py-25>
       <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
     </div>
+    <!-- ↓这里可以直接使用app -->
+    <div @click="app.User.handleClick">reverse: {{ app.User.reverseName }}</div>
     <div py-25>
       <u-button
         text="开冲"
         :disabled="!name"
         color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
-        @click="name && sayHi()"
+        @click="sayHi"
       ></u-button>
-      <!-- ↑这里有个小bug,由于组件中没有声明事件,vue3会优先匹配原生事件,导致disabled时仍会触发 -->
-      <!-- 欢迎提交pr修复 -->
     </div>
     <p text-sm opacity-75>打开F12进入移动端视图</p>
     <p text-sm opacity-75>向下滑动体验下拉刷新</p>
@@ -26,7 +26,8 @@
 </template>
 
 <script setup lang="ts">
-const name = __filename
+// 可以用ref语法糖解构store
+const { name } = $(app.User)
 
 function sayHi() {
   app

@@ -50,15 +50,18 @@
 
 ## 💄 Features
 
-- ✅ 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
-- ✅ 随时更新 - 妈妈再也不用担心项目不能用脚手架的新功能了
-- ✅ 各种自动按需引入 - 减少代码量，保护你娇弱的手指
-- ✅ 自动路由配置 - 全自动化构建 pages.json 文件
-- ✅ 原子化 css - 并且支持小程序使用 Attributify 风格
-- ✅ 超多 utils - 工具函数加快开发效率
-- ✅ uView UI 组件库 - 我偷偷适配了 Vue3 哦
-- ✅ vitest + power-assert 单测 - 最简单的 assert, 最极致的享受
-- ✅ 杀手级别的页面间跳转流程 - 像使用 Promise 一样使用页面路由，传值回调应有尽有
+- 🍱 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
+- 🧨 随时更新 - 妈妈再也不用担心脚手架更新了
+- 💡 自动引入 - 减少代码量，保护你娇弱的手指
+- 🛺 自动路由 - 全自动化构建 pages.json 文件
+- ⚛️ 原子 css - 并且支持小程序使用 Attributify 风格
+- 🧰 超多 utils - 工具函数加快开发效率
+- 🛠️ uView UI - 我偷偷适配了 Vue3 哦
+- 🤹‍♂️ 超爽单测 - vitest + power-assert, 最简单的 assert, 最极致的享受
+- 🍍 装饰器 Pinia - 让你的 store 更简洁
+- 🥷 杀手级别的跳转 - 像使用 Promise 一样使用页面路由，传值回调应有尽有
+
+TODO
 - 🚧 完善更新日志流程
 - 🚧 添加 axios 模块，构建请求封装
 - 🚧 添加 UniCloud-ts 基础框架 (`src/app/server/`)
@@ -303,13 +306,6 @@ todo...
 #### 状态管理
 
 请阅读`src/app/store/module`中的代码
-
-docs: https://github.com/michaelolof/vuex-class-component
-
-```ts
-// 可以直接赋值
-app.Global.token = '123456'
-```
 
 #### 时间处理
 

@@ -16,8 +16,8 @@ export const appPlugin = {
     app.catch(() => (wx['uni'] = uni))
     vueApp.config.globalProperties.app = app
     vueApp.config.globalProperties.uni = uni
-    vueApp.use(store())
-    vueApp.use(server())
+    vueApp.use(store)
+    vueApp.use(server)
     let sum = ''
     Object.entries(import.meta.globEager('./utils/*.ts')).forEach(([k, v]) => {
       let name = k.replace(/^\.\/utils\//, '')
