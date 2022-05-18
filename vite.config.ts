@@ -36,7 +36,7 @@ export default defineConfig({
     isTest() || uni({ vueOptions: { reactivityTransform: true } }),
     isTest() && Espower(),
     Define(), //添加一些全局变量
-    // visualizer(), //可视化依赖关系
+    visualizer(), //可视化依赖关系
   ],
   esbuild: { keepNames: true },
   optimizeDeps: { exclude: ['lodash-es'] },

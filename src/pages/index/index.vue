@@ -8,17 +8,14 @@
       <em text-sm opacity-75>快速，优雅的全栈预设模板</em>
     </p>
     <div py-25>
-      <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
+      <uni-easyinput v-model="name" placeholder="你的名字?" />
     </div>
     <!-- ↓这里可以直接使用app -->
     <div @click="app.User.handleClick">reverse: {{ app.User.reverseName }}</div>
     <div py-25>
-      <u-button
-        text="开冲"
-        :disabled="!name"
-        color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
-        @click="sayHi"
-      ></u-button>
+      <div pxlg pysm text-white bg-gradient-to-br from-hex-f093fb to-hex-f5576c @click="sayHi">
+        开冲
+      </div>
     </div>
     <p text-sm opacity-75>打开F12进入移动端视图</p>
     <p text-sm opacity-75>向下滑动体验下拉刷新</p>

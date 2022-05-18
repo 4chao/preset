@@ -10,9 +10,7 @@ declare module '*.vue' {
 }
 
 declare namespace UniApp {
-  interface Uni {
-    $u: any
-  }
+  interface Uni {}
 }
 
 type func<P extends any[] = any[], R = any> = (...args: P) => R

@@ -9,7 +9,7 @@ export default {
       autoscan: true,
       custom: {
         '^sys$': '@/sys.vue',
-        '^u-(.*)': 'uview-ui/components/u-$1/u-$1.vue',
+        '^uni-(.*)': '@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue',
       },
     },
   },

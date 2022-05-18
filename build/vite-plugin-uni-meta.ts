@@ -127,7 +127,7 @@ export default function (options: Partial<Options> = {}) {
             } catch (error) {
               log(c.red(`请为文件 ${normalizePagePath(id)} 提供正确的meta信息\n` + c.red(error)))
             }
-            if (pageMeta[normalizePagePath(id)] !== meta) {
+            if (pageMeta[normalizePagePath(id)] !== (meta || '{}')) {
               debug(pageMeta[normalizePagePath(id)], meta)
 
               log(c.blue(normalizePagePath(id)), c.yellow(`更新了meta信息`))

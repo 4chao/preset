@@ -33,7 +33,6 @@
     - [自动路由配置](#自动路由配置)
     - [API 自动引入](#api-自动引入)
     - [根组件自动引入](#根组件自动引入)
-    - [uView UI](#uview-ui)
     - [原子化 css](#原子化-css)
     - [更新模板](#更新模板)
     - [单元测试](#单元测试)
@@ -56,7 +55,6 @@
 - 🛺 自动路由 - 全自动化构建 pages.json 文件
 - ⚛️ 原子 css - 并且支持小程序使用 Attributify 风格
 - 🧰 超多 utils - 工具函数加快开发效率
-- 🛠️ uView UI - 我偷偷适配了 Vue3 哦
 - 🤹‍♂️ 超爽单测 - vitest + power-assert, 最简单的 assert, 最极致的享受
 - 🍍 装饰器 Pinia - 让你的 store 更简洁
 - 🥷 杀手级别的跳转 - 像使用 Promise 一样使用页面路由，传值回调应有尽有
@@ -185,15 +183,7 @@ source: `build/vite-plugin-uni-provider.ts`
 
 为了方便一些页面级别 provide 的开发，每个页面当中将隐式的引入根组件`<sys>`
 
-当然如果你需要显示的传递 props 或者使用 slot, 应当自行用 sys 组件作为页面根节点
-
-#### uView UI
-
-repo: https://github.com/PentaTea/uView2.0
-
-docs: https://www.uviewui.com/components/intro.html
-
-适配 vue3 可能会带来一些 bug, 你也可以不使用这个库
+当然如果你需要显式的传递 props 或者使用 slot, 应当自行用 sys 组件作为页面根节点
 
 #### 原子化 css
 

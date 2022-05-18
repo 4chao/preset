@@ -37,14 +37,7 @@ module.exports = {
     'vue/attribute-hyphenation': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
-    'vue/component-name-in-template-casing': [
-      'error',
-      'PascalCase',
-      {
-        registeredComponentsOnly: false,
-        ignores: ['/^u-/'],
-      },
-    ],
+    'vue/component-name-in-template-casing': 'off',
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
 

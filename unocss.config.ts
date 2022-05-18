@@ -1,5 +1,6 @@
 import { defineConfig, presetUno, presetAttributify, presetIcons } from 'unocss'
 import { times } from 'lodash'
+import path from 'path'
 
 export default defineConfig({
   theme: {
@@ -17,11 +18,14 @@ export default defineConfig({
     'flex-center': 'flex flex-row justify-center items-center',
     'flex-center-col': 'flex flex-col justify-center items-center',
   },
-  postprocess: util => {
+  postprocess: [
     // 小程序不需要属性选择器
-    if (!process.env.UNI_PLATFORM?.startsWith('mp')) return
-    if (!util.selector.startsWith('[')) return
-    util.selector = undefined
-    util.entries = []
-  },
+    process.env.UNI_PLATFORM?.startsWith('mp') &&
+      (util => {
+        if (!util.selector.startsWith('[')) return
+        util.selector = undefined
+        util.entries = []
+      }),
+  ].filter(e => !!e),
+  include: [path.resolve(__dirname, 'src', '**')],
 })
