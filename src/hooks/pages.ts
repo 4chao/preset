@@ -28,9 +28,10 @@ export function useQuery<T>(fn?: (data: any) => void | T) {
 }
 
 import { Mescroll } from '@/types'
+import { RefValue } from 'vue/macros'
 export const ScrollSymbol = Symbol('mescroll')
 export interface ScrollOptions {
-  mescroll?: Mescroll
+  mescroll?: RefValue<Mescroll>
   enable: 'none' | 'up' | 'down' | 'all'
   fetch: (...arg: any[]) => void
 }
