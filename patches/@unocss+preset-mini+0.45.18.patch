@@ -1,0 +1,52 @@
+diff --git a/node_modules/@unocss/preset-mini/dist/index.cjs b/node_modules/@unocss/preset-mini/dist/index.cjs
+index 006a61f..6257bd7 100644
+--- a/node_modules/@unocss/preset-mini/dist/index.cjs
++++ b/node_modules/@unocss/preset-mini/dist/index.cjs
+@@ -17,7 +17,7 @@ const preflights = [
+     getCSS(ctx) {
+       if (ctx.theme.preflightBase) {
+         const css = core.entriesToCss(Object.entries(ctx.theme.preflightBase));
+-        return `*,::before,::after{${css}}::backdrop{${css}}`;
++        return `:not(not),::before,::after{${css}}::backdrop{${css}}`;
+       }
+     }
+   }
+diff --git a/node_modules/@unocss/preset-mini/dist/index.mjs b/node_modules/@unocss/preset-mini/dist/index.mjs
+index c1b5270..5f4bb7d 100644
+--- a/node_modules/@unocss/preset-mini/dist/index.mjs
++++ b/node_modules/@unocss/preset-mini/dist/index.mjs
+@@ -14,7 +14,7 @@ const preflights = [
+     getCSS(ctx) {
+       if (ctx.theme.preflightBase) {
+         const css = entriesToCss(Object.entries(ctx.theme.preflightBase));
+-        return `*,::before,::after{${css}}::backdrop{${css}}`;
++        return `:not(not),::before,::after{${css}}::backdrop{${css}}`;
+       }
+     }
+   }
+diff --git a/node_modules/@unocss/preset-mini/dist/shared/preset-mini.2811888e.mjs b/node_modules/@unocss/preset-mini/dist/shared/preset-mini.2811888e.mjs
+index d2cbb23..7766f18 100644
+--- a/node_modules/@unocss/preset-mini/dist/shared/preset-mini.2811888e.mjs
++++ b/node_modules/@unocss/preset-mini/dist/shared/preset-mini.2811888e.mjs
+@@ -180,7 +180,7 @@ function rem(str) {
+   const [, n, unit] = match;
+   const num = parseFloat(n);
+   if (!Number.isNaN(num))
+-    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
+ }
+ function px(str) {
+   if (str.match(unitOnlyRE))
+diff --git a/node_modules/@unocss/preset-mini/dist/shared/preset-mini.733d8647.cjs b/node_modules/@unocss/preset-mini/dist/shared/preset-mini.733d8647.cjs
+index 4842e2f..321bf54 100644
+--- a/node_modules/@unocss/preset-mini/dist/shared/preset-mini.733d8647.cjs
++++ b/node_modules/@unocss/preset-mini/dist/shared/preset-mini.733d8647.cjs
+@@ -182,7 +182,7 @@ function rem(str) {
+   const [, n, unit] = match;
+   const num = parseFloat(n);
+   if (!Number.isNaN(num))
+-    return unit ? `${round(num)}${unit}` : `${round(num / 4)}rem`;
++    return unit ? `${round(num)}${unit}` : process.env.UNI_PLATFORM?.startsWith('mp') ? `${round(num)}rpx` : `${round(num / 32)}rem`;
+ }
+ function px(str) {
+   if (str.match(unitOnlyRE))

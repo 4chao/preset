@@ -1,6 +1,4 @@
 import { debounce, DebouncedFuncLeading } from 'lodash'
-import USID from 'usid'
-const usid = new USID()
 
 export function getPath(p: string, currentGroup: string) {
   let [group, path] = Array.from(p.match(/^(?:#(.*?)(?:\/|$))?(.*)$/)).slice(1)
@@ -12,7 +10,7 @@ let to = debounce(
   (path: string, obj?: any) => {
     const currentPath = getCurrentPages().pop()['route']
     const currentGroup = currentPath.split('/')[1]
-    const id = usid.uuid()
+    const id = String.rand()
 
     const pkg = { data: obj, from: currentPath, id }
     uni.$on(id + '_query', cb => cb(pkg))

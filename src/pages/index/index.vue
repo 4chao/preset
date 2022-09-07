@@ -17,7 +17,9 @@
         开冲
       </div>
     </div>
+    <!-- #if H5 -->
     <p text-sm opacity-75>打开F12进入移动端视图</p>
+    <!-- #endif -->
     <p text-sm opacity-75>向下滑动体验下拉刷新</p>
   </div>
 </template>
