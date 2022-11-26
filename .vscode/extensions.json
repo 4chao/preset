@@ -1,3 +1,10 @@
 {
-  "recommendations": ["Vue.volar"]
+  "recommendations": [
+    "zixuanchen.vitest-explorer",
+    "antfu.vite",
+    "antfu.unocss",
+    "vue.volar",
+    "antfu.iconify",
+    "esbenp.prettier-vscode"
+  ]
 }
