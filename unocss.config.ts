@@ -37,6 +37,7 @@ export default defineConfig({
       else o[k] = (i / 3.2).toFixed(2) + 'rem'
       return o
     }, {}),
+    breakpoints: {},
   },
   presets: [presetUno(), presetIcons(), ...presets],
   transformers: [transformerDirectives(), transformerVariantGroup(), ...transformers],

@@ -14,13 +14,14 @@
     <div @click="app.User.handleClick">reverse: {{ app.User.reverseName }}</div>
     <div py-25>
       <div pxlg pysm text-white bg-gradient-to-br from-hex-f093fb to-hex-f5576c @click="sayHi">
-        开冲
+        开始体验
       </div>
     </div>
     <!-- #if H5 -->
     <p text-sm opacity-75>打开F12进入移动端视图</p>
     <!-- #endif -->
     <p text-sm opacity-75>向下滑动体验下拉刷新</p>
+    <p text-blue text-sm ptsm @click="app.to('#test')">→ test页面 ←</p>
   </div>
 </template>
 

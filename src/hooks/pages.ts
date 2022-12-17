@@ -1,34 +1,30 @@
-import { ToRefs } from 'vue'
-import { PageParams } from '@/types'
+import qs from 'qs'
+import { parseObject } from 'query-types'
+import { definePage, UseParamsType } from '@/types'
 
-type QueryDefaultData<T> = Omit<PageParams, 'data'> & { data: T & AObjectHasAnyKeys }
 /**
  * 获得当前页面跳转携带的参数和信息
- * (依赖 app.to )
- * @param fn 函数时为回调函数,其他为默认返回值
+ * @param fn 回调函数
  */
-export function useQuery<T>(fn: T): ToRefs<QueryDefaultData<T>>
-export function useQuery(fn?: (data: any) => void): ToRefs<PageParams>
-export function useQuery<T>(fn?: (data: any) => void | T) {
-  let isF = typeof fn === 'function'
-  const query = reactive<{ data?: any; id?: string; from?: string }>({
-    data: isF ? {} : fn,
-    id: null,
-    from: null,
-  })
+export function useQuery<T extends definePage = definePage>(
+  fn?: (data: T) => void,
+): Ref<T[typeof UseParamsType]> | Ref<undefined> {
+  const query = ref<T[typeof UseParamsType]>(null)
 
   Promise.do(async () => {
     if (!getCurrentPages().pop()?.['$page']?.fullPath) await new Promise(r => onLoad(r))
-    let id = getCurrentPages().pop()['$page'].fullPath.split('?id=')[1]
-    uni.$emit(id + '_query', pkg => Object.assign(query, pkg))
-    isF && fn(query.data)
+    const search = getCurrentPages().pop()?.['$page']?.fullPath.split('?').pop()
+    query.value = parseObject(qs.parse(decodeURIComponent(search)))
+    console.log(`onLoad接收参数!!:`, query.value)
+    fn?.(query.value)
   }).catch(err => app.error('参数获取失败', err))
 
-  return toRefs(query)
+  return query
 }
 
 import { Mescroll } from '@/types'
 import { RefValue } from 'vue/macros'
+import { Ref } from 'vue'
 export const ScrollSymbol = Symbol('mescroll')
 export interface ScrollOptions {
   mescroll?: RefValue<Mescroll>

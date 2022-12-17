@@ -24,7 +24,7 @@ interface PromiseConstructor {
 }
 
 String.rand = function () {
-  return new Date().getTime() + Math.random().toString(36).substring(2)
+  return (new Date().getTime() % Math.random()).toString(36).substring(2)
 }
 
 interface StringConstructor {

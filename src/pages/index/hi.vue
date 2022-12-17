@@ -3,7 +3,7 @@
   <div flex-center-col pt100>
     <div text-4xl py-25 flex-center>
       <div class="icon" i-ri-compasses-2-line inline-block mrsm></div>
-      Hi {{ data.name || '匿名同学' }}
+      Hi {{ query?.name || '匿名同学' }}
     </div>
     <p text-sm opacity-75>也可以往回传值哦</p>
     <p text-sm opacity-75>尝试填入内容点击返回↓</p>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-const { data } = $(useQuery({ name: '默认初始值' }))
+const query = $(useQuery())
 const text = $ref('')
 </script>
 
