@@ -14,7 +14,7 @@ let to = debounce(
     const currentGroup = currentPath.split('/')[1]
     const id = String.rand()
 
-    const pkg = <definePage[typeof UseParamsType]>{
+    const pkg = {
       ...obj,
       __spm_id: id,
       __spm_source: currentPath,

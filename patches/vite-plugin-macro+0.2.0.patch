@@ -1,0 +1,13 @@
+diff --git a/node_modules/vite-plugin-macro/dist/index.js b/node_modules/vite-plugin-macro/dist/index.js
+index e294a0a..50df5d7 100644
+--- a/node_modules/vite-plugin-macro/dist/index.js
++++ b/node_modules/vite-plugin-macro/dist/index.js
+@@ -529,7 +529,7 @@ function macroPlugin(options) {
+       return attachable;
+     },
+     name,
+-    enforce: "pre",
++    enforce: "post",
+     configResolved(config) {
+       var _a2, _b2;
+       runtime == null ? void 0 : runtime.setDevMode((_b2 = (_a2 = config == null ? void 0 : config.env) == null ? void 0 : _a2.DEV) != null ? _b2 : false);

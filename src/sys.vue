@@ -15,6 +15,10 @@
 <script setup lang="ts">
 import MescrollBody from 'mescroll-uni/mescroll-body.vue'
 import { ScrollOptions } from '@/hooks'
+import { stores } from '@/app/store'
+
+$log('哇咔咔', '喵喵喵', {})
+
 const query = $(useQuery())
 // 页面卸载,解绑回调事件
 onUnload(() => uni.$emit(query.__spm_id + '_resolve', {}))

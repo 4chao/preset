@@ -1,6 +1,17 @@
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import { vitePluginMacro } from 'vite-plugin-macro'
+import path from 'path'
+
 import * as Hooks from '../src/hooks'
+import { provideDebug } from '../macros/debug'
+
+const macroSet = vitePluginMacro({
+  typesPath: 'declare/macros.d.ts',
+  include: ['**/*.ts', '**/*.vue'],
+}).use(provideDebug())
+
+export const Macros = () => macroSet.toPlugin()
 
 export const ImportsConfig: Parameters<typeof AutoImport>[0] = {
   imports: [
@@ -10,6 +21,13 @@ export const ImportsConfig: Parameters<typeof AutoImport>[0] = {
     { '@/app/utils/request': ['api'] },
     getImports('@/hooks', Hooks),
     { 'power-assert': [['default', 'assert']] },
+
+    // 自动引入变量名以$开头的宏
+    ...Object.entries((macroSet as any).runtime.macros).map(
+      ([modules, macros]: [string, any[]]) => ({
+        [modules]: macros.map(m => m.name).filter(name => name.startsWith('$')),
+      }),
+    ),
   ],
   dts: 'declare/auto-imports.d.ts',
 }

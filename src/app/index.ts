@@ -28,7 +28,10 @@ export const appPlugin = {
         console.error('[appPlugin 加载失败]', `in ${name}\n`, error)
       }
     })
-    if (import.meta.env.DEV) app.success('appPlugin 加载完成', sum)
+    if (import.meta.env.DEV) {
+      uni.setStorageSync('debug', '*')
+      app.success('appPlugin 加载完成', sum)
+    }
   },
 }
 
