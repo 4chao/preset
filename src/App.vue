@@ -1,6 +1,6 @@
 <script setup lang="ts">
 $log('喵喵喵')
-$warn<''>('123123123', onLaunch, [{}])
+$warn<'mmm'>('123123123', onLaunch, [{}])
 
 $log('3455')
 $log('3455')

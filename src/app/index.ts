@@ -25,13 +25,11 @@ export const appPlugin = {
         v?.default?.(vueApp)
         sum += name + ' '
       } catch (error) {
+        $error<'appPlugin'>('加载失败:', `in ${name}\n`, error)
         console.error('[appPlugin 加载失败]', `in ${name}\n`, error)
       }
     })
-    if (import.meta.env.DEV) {
-      uni.setStorageSync('debug', '*')
-      app.success('appPlugin 加载完成', sum)
-    }
+    $log<'appPlugin'>('加载成功:', sum)
   },
 }
 

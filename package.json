@@ -40,6 +40,7 @@
     "pinia-plugin-persist-uni": "^1.1.5",
     "qs": "^6.11.0",
     "query-types": "^0.1.4",
+    "uniqolor": "^1.1.0",
     "uview-ui": "PentaTea/uView2.0#pkg",
     "vue": "^3.2.29",
     "vue-i18n": "^9.1.9",
