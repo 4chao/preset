@@ -1,5 +1,8 @@
 import { Store, Pinia, Persist } from '../utils'
 
+/**
+ * 用户信息
+ */
 @Store
 export class User extends Pinia {
   // 下方为示例变量 - 开发时请删除

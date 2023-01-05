@@ -1,8 +1,8 @@
 import { defineMacro, defineMacroProvider } from 'vite-plugin-macro'
 import { relative, resolve } from 'path'
-import { getSourceCode, getMacroType } from './utils'
+import { getMacroType } from './utils'
 
-const types = ['log', 'warn', 'error']
+const types = ['debug', 'log', 'info', 'warn', 'error']
 
 const debugMacros = types.map(name =>
   defineMacro('$' + name)

@@ -26,7 +26,6 @@ export const appPlugin = {
         sum += name + ' '
       } catch (error) {
         $error<'appPlugin'>('加载失败:', `in ${name}\n`, error)
-        console.error('[appPlugin 加载失败]', `in ${name}\n`, error)
       }
     })
     $log<'appPlugin'>('加载成功:', sum)
