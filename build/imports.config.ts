@@ -1,7 +1,6 @@
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { vitePluginMacro } from 'vite-plugin-macro'
-import path from 'path'
 
 import * as Hooks from '../src/hooks'
 import { provideDebug } from '../macros/debug'
@@ -9,9 +8,10 @@ import { provideDebug } from '../macros/debug'
 const macroSet = vitePluginMacro({
   typesPath: 'declare/macros.d.ts',
   include: ['**/*.ts', '**/*.vue'],
-}).use(provideDebug())
+}) //在下面注入宏
+  .use(provideDebug())
 
-export const Macros = () => macroSet.toPlugin()
+export const Macros = () => macroSet.toPlugin().map(e => ({ ...e, enforce: 'post' }))
 
 export const ImportsConfig: Parameters<typeof AutoImport>[0] = {
   imports: [
