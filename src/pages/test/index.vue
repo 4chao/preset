@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { PageDemo1, PageDemo2, PageDemo3 } from '@/types'
-const toast = title => uni.showToast({ title: String(title), icon: 'none' })
+const toast = e => uni.showToast({ title: JSON.stringify(e), icon: 'none' })
 const page1 = () => app.to<PageDemo1>('page', { a: 1.225, b: '大海星' }).then(toast)
 const page2 = () => app.to<PageDemo2>('page', { a: [Math.PI, '喵喵喵', true] }).then(toast)
 const page3 = () =>

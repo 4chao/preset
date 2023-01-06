@@ -1,3 +1,7 @@
+/**
+ * 定义时间相关的工具函数
+ */
+
 import time from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import relativeTime from 'dayjs/plugin/relativeTime'

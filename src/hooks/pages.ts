@@ -15,9 +15,8 @@ export function useQuery<T extends definePage = definePage>(
     if (!getCurrentPages().pop()?.['$page']?.fullPath) await new Promise(r => onLoad(r))
     const search = getCurrentPages().pop()?.['$page']?.fullPath.split('?').pop()
     query.value = parseObject(qs.parse(decodeURIComponent(search)))
-    console.log(`onLoad接收参数!!:`, query.value)
     fn?.(query.value)
-  }).catch(err => app.error('参数获取失败', err))
+  }).catch(err => $error<'参数接收'>('获取失败', err))
 
   return query
 }

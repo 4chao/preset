@@ -1,14 +1,13 @@
 <script setup lang="ts">
 onLaunch(() => {
-  console.log('App Launch')
+  $log('onLaunch')
 })
 onShow(() => {
-  console.log('App Show')
+  $log('onShow')
 })
 onHide(() => {
-  console.log('App Hide')
+  $log('onHide')
 })
-console.log(__filename)
 </script>
 <style lang="scss">
 // #ifndef APP-NVUE

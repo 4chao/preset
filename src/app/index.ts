@@ -25,10 +25,10 @@ export const appPlugin = {
         v?.default?.(vueApp)
         sum += name + ' '
       } catch (error) {
-        console.error('[appPlugin 加载失败]', `in ${name}\n`, error)
+        $error<'appPlugin'>('加载失败:', `in ${name}\n`, error)
       }
     })
-    if (import.meta.env.DEV) app.success('appPlugin 加载完成', sum)
+    $log<'appPlugin'>('加载成功:', sum)
   },
 }
 

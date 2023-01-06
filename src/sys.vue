@@ -15,11 +15,13 @@
 <script setup lang="ts">
 import MescrollBody from 'mescroll-uni/mescroll-body.vue'
 import { ScrollOptions } from '@/hooks'
+import { BackMeta } from './types'
+
 const query = $(useQuery())
 // 页面卸载,解绑回调事件
-onUnload(() => uni.$emit(query.__spm_id + '_resolve', {}))
-onUnload(() => uni.$off(query.__spm_id + '_resolve'))
-onUnload(() => uni.$off(query.__spm_id + '_reject'))
+onUnload(() => uni.$emit(`${query.__spm_id}_resolve`, <BackMeta>{ from: 'backbutton' }))
+onUnload(() => uni.$off(`${query.__spm_id}_resolve`))
+onUnload(() => uni.$off(`${query.__spm_id}_reject`))
 
 // mescroll 提供上拉加载下拉刷新能力
 // 文档: https://www.mescroll.com/uni.html

@@ -14,7 +14,7 @@ import Espower from './build/vite-plugin-espower'
 import Define from './build/vite-plugin-define'
 import { visualizer } from 'rollup-plugin-visualizer'
 
-import { ImportsConfig, ComponentsConfig } from './build/imports.config'
+import { Macros, ImportsConfig, ComponentsConfig } from './build/imports.config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -38,6 +38,7 @@ export default defineConfig({
     uni({ vueOptions: { reactivityTransform: true } }),
     Espower(),
     Define(), //添加一些全局变量
+    Macros(), //宏
     visualizer(), //可视化依赖关系
   ],
   esbuild: { keepNames: true },

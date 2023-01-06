@@ -29,6 +29,12 @@
 // 可以用ref语法糖解构store
 const { name } = $(app.User)
 
+$info(1, '123', true, undefined, null, {}, [], () => {})
+$debug(1, '123', true, undefined, null, {}, [], () => {})
+$log<'测试log宏'>(1, '123', true, undefined, null, {}, [], () => {})
+$warn(1, '123', true, undefined, null, {}, [], () => {})
+$error(1, '123', true, undefined, null, {}, [], () => {})
+
 function sayHi() {
   app
     .to('hi', { name })
@@ -43,7 +49,7 @@ function sayHi() {
 }
 
 useScroll(onPageScroll).onLoad(page => {
-  app.info('页面加载', `第${page.num}页`)
+  $log<'页面加载'>(`第${page.num}页`)
   setTimeout(() => page.endSuccess(1, false), 1000)
 })
 </script>

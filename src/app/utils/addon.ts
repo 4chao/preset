@@ -1,3 +1,7 @@
+/**
+ * 直接修改原生对象的原型链, 请谨慎使用
+ */
+
 Promise.prototype.wait = function (ms) {
   return this.then(
     res => new Promise(resolve => setTimeout(() => resolve(res), ms)),
