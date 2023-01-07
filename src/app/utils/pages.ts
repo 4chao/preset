@@ -25,9 +25,11 @@ let to = debounce(
     }
 
     let url = getPath(path, currentGroup)
+    let query = qs.stringify(pkg, { addQueryPrefix: true })
     uni
-      .navigateTo({ url: url + qs.stringify(pkg, { addQueryPrefix: true }) })
+      .navigateTo({ url: url + query })
       .then(() => $log<'页面切换'>(path === url ? path : `${path} (${url})`, obj))
+      .catch(() => uni.switchTab({ url: url + query }))
       .catch(err => $error<'页面切换失败'>(path, err))
     return new Promise<any>((r, e) => (uni.$once(id + '_resolve', r), uni.$once(id + '_reject', e)))
   },
